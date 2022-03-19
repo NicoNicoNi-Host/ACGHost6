@@ -1,0 +1,5462 @@
+ element("style");
+	style.id = "svelte-egt0yd-style";
+	style.textContent = "td.svelte-egt0yd{border-right:1px solid var(--background-modifier-border)}.week-num.svelte-egt0yd{background-color:var(--color-background-weeknum);border-radius:4px;color:var(--color-text-weeknum);cursor:pointer;font-size:0.65em;height:100%;padding:4px;text-align:center;transition:background-color 0.1s ease-in, color 0.1s ease-in;vertical-align:baseline}.week-num.svelte-egt0yd:hover{background-color:var(--interactive-hover)}.week-num.active.svelte-egt0yd:hover{background-color:var(--interactive-accent-hover)}.active.svelte-egt0yd{color:var(--text-on-accent);background-color:var(--interactive-accent)}.dot-container.svelte-egt0yd{display:flex;flex-wrap:wrap;justify-content:center;line-height:6px;min-height:6px}";
+	append(document.head, style);
+}
+
+function get_each_context$1(ctx, list, i) {
+	const child_ctx = ctx.slice();
+	child_ctx[11] = list[i];
+	return child_ctx;
+}
+
+// (35:8) {#each metadata.dots as dot}
+function create_each_block$1(ctx) {
+	let dot;
+	let current;
+	const dot_spread_levels = [/*dot*/ ctx[11]];
+	let dot_props = {};
+
+	for (let i = 0; i < dot_spread_levels.length; i += 1) {
+		dot_props = assign(dot_props, dot_spread_levels[i]);
+	}
+
+	dot = new Dot({ props: dot_props });
+
+	return {
+		c() {
+			create_component(dot.$$.fragment);
+		},
+		m(target, anchor) {
+			mount_component(dot, target, anchor);
+			current = true;
+		},
+		p(ctx, dirty) {
+			const dot_changes = (dirty & /*metadata*/ 64)
+			? get_spread_update(dot_spread_levels, [get_spread_object(/*dot*/ ctx[11])])
+			: {};
+
+			dot.$set(dot_changes);
+		},
+		i(local) {
+			if (current) return;
+			transition_in(dot.$$.fragment, local);
+			current = true;
+		},
+		o(local) {
+			transition_out(dot.$$.fragment, local);
+			current = false;
+		},
+		d(detaching) {
+			destroy_component(dot, detaching);
+		}
+	};
+}
+
+// (24:2) <MetadataResolver metadata="{metadata}" let:metadata>
+function create_default_slot(ctx) {
+	let div1;
+	let t0;
+	let t1;
+	let div0;
+	let div1_class_value;
+	let current;
+	let mounted;
+	let dispose;
+	let each_value = /*metadata*/ ctx[6].dots;
+	let each_blocks = [];
+
+	for (let i = 0; i < each_value.length; i += 1) {
+		each_blocks[i] = create_each_block$1(get_each_context$1(ctx, each_value, i));
+	}
+
+	const out = i => transition_out(each_blocks[i], 1, 1, () => {
+		each_blocks[i] = null;
+	});
+
+	return {
+		c() {
+			div1 = element("div");
+			t0 = text(/*weekNum*/ ctx[0]);
+			t1 = space();
+			div0 = element("div");
+
+			for (let i = 0; i < each_blocks.length; i += 1) {
+				each_blocks[i].c();
+			}
+
+			attr(div0, "class", "dot-container svelte-egt0yd");
+			attr(div1, "class", div1_class_value = "" + (null_to_empty(`week-num ${/*metadata*/ ctx[6].classes.join(" ")}`) + " svelte-egt0yd"));
+			toggle_class(div1, "active", /*selectedId*/ ctx[5] === getDateUID_1(/*days*/ ctx[1][0], "week"));
+		},
+		m(target, anchor) {
+			insert(target, div1, anchor);
+			append(div1, t0);
+			append(div1, t1);
+			append(div1, div0);
+
+			for (let i = 0; i < each_blocks.length; i += 1) {
+				each_blocks[i].m(div0, null);
+			}
+
+			current = true;
+
+			if (!mounted) {
+				dispose = [
+					listen(div1, "click", function () {
+						if (is_function(/*onClick*/ ctx[3] && /*click_handler*/ ctx[8])) (/*onClick*/ ctx[3] && /*click_handler*/ ctx[8]).apply(this, arguments);
+					}),
+					listen(div1, "contextmenu", function () {
+						if (is_function(/*onContextMenu*/ ctx[4] && /*contextmenu_handler*/ ctx[9])) (/*onContextMenu*/ ctx[4] && /*contextmenu_handler*/ ctx[9]).apply(this, arguments);
+					}),
+					listen(div1, "pointerover", function () {
+						if (is_function(/*onHover*/ ctx[2] && /*pointerover_handler*/ ctx[10])) (/*onHover*/ ctx[2] && /*pointerover_handler*/ ctx[10]).apply(this, arguments);
+					})
+				];
+
+				mounted = true;
+			}
+		},
+		p(new_ctx, dirty) {
+			ctx = new_ctx;
+			if (!current || dirty & /*weekNum*/ 1) set_data(t0, /*weekNum*/ ctx[0]);
+
+			if (dirty & /*metadata*/ 64) {
+				each_value = /*metadata*/ ctx[6].dots;
+				let i;
+
+				for (i = 0; i < each_value.length; i += 1) {
+					const child_ctx = get_each_context$1(ctx, each_value, i);
+
+					if (each_blocks[i]) {
+						each_blocks[i].p(child_ctx, dirty);
+						transition_in(each_blocks[i], 1);
+					} else {
+						each_blocks[i] = create_each_block$1(child_ctx);
+						each_blocks[i].c();
+						transition_in(each_blocks[i], 1);
+						each_blocks[i].m(div0, null);
+					}
+				}
+
+				group_outros();
+
+				for (i = each_value.length; i < each_blocks.length; i += 1) {
+					out(i);
+				}
+
+				check_outros();
+			}
+
+			if (!current || dirty & /*metadata*/ 64 && div1_class_value !== (div1_class_value = "" + (null_to_empty(`week-num ${/*metadata*/ ctx[6].classes.join(" ")}`) + " svelte-egt0yd"))) {
+				attr(div1, "class", div1_class_value);
+			}
+
+			if (dirty & /*metadata, selectedId, getDateUID, days*/ 98) {
+				toggle_class(div1, "active", /*selectedId*/ ctx[5] === getDateUID_1(/*days*/ ctx[1][0], "week"));
+			}
+		},
+		i(local) {
+			if (current) return;
+
+			for (let i = 0; i < each_value.length; i += 1) {
+				transition_in(each_blocks[i]);
+			}
+
+			current = true;
+		},
+		o(local) {
+			each_blocks = each_blocks.filter(Boolean);
+
+			for (let i = 0; i < each_blocks.length; i += 1) {
+				transition_out(each_blocks[i]);
+			}
+
+			current = false;
+		},
+		d(detaching) {
+			if (detaching) detach(div1);
+			destroy_each(each_blocks, detaching);
+			mounted = false;
+			run_all(dispose);
+		}
+	};
+}
+
+function create_fragment$1(ctx) {
+	let td;
+	let metadataresolver;
+	let current;
+
+	metadataresolver = new MetadataResolver({
+			props: {
+				metadata: /*metadata*/ ctx[6],
+				$$slots: {
+					default: [
+						create_default_slot,
+						({ metadata }) => ({ 6: metadata }),
+						({ metadata }) => metadata ? 64 : 0
+					]
+				},
+				$$scope: { ctx }
+			}
+		});
+
+	return {
+		c() {
+			td = element("td");
+			create_component(metadataresolver.$$.fragment);
+			attr(td, "class", "svelte-egt0yd");
+		},
+		m(target, anchor) {
+			insert(target, td, anchor);
+			mount_component(metadataresolver, td, null);
+			current = true;
+		},
+		p(ctx, [dirty]) {
+			const metadataresolver_changes = {};
+			if (dirty & /*metadata*/ 64) metadataresolver_changes.metadata = /*metadata*/ ctx[6];
+
+			if (dirty & /*$$scope, metadata, selectedId, days, onClick, startOfWeek, onContextMenu, onHover, weekNum*/ 16639) {
+				metadataresolver_changes.$$scope = { dirty, ctx };
+			}
+
+			metadataresolver.$set(metadataresolver_changes);
+		},
+		i(local) {
+			if (current) return;
+			transition_in(metadataresolver.$$.fragment, local);
+			current = true;
+		},
+		o(local) {
+			transition_out(metadataresolver.$$.fragment, local);
+			current = false;
+		},
+		d(detaching) {
+			if (detaching) detach(td);
+			destroy_component(metadataresolver);
+		}
+	};
+}
+
+function instance$1($$self, $$props, $$invalidate) {
+	
+	
+	let { weekNum } = $$props;
+	let { days } = $$props;
+	let { metadata } = $$props;
+	let { onHover } = $$props;
+	let { onClick } = $$props;
+	let { onContextMenu } = $$props;
+	let { selectedId = null } = $$props;
+	let startOfWeek;
+	const click_handler = e => onClick(startOfWeek, isMetaPressed(e));
+	const contextmenu_handler = e => onContextMenu(days[0], e);
+	const pointerover_handler = e => onHover(startOfWeek, e.target, isMetaPressed(e));
+
+	$$self.$$set = $$props => {
+		if ("weekNum" in $$props) $$invalidate(0, weekNum = $$props.weekNum);
+		if ("days" in $$props) $$invalidate(1, days = $$props.days);
+		if ("metadata" in $$props) $$invalidate(6, metadata = $$props.metadata);
+		if ("onHover" in $$props) $$invalidate(2, onHover = $$props.onHover);
+		if ("onClick" in $$props) $$invalidate(3, onClick = $$props.onClick);
+		if ("onContextMenu" in $$props) $$invalidate(4, onContextMenu = $$props.onContextMenu);
+		if ("selectedId" in $$props) $$invalidate(5, selectedId = $$props.selectedId);
+	};
+
+	$$self.$$.update = () => {
+		if ($$self.$$.dirty & /*days*/ 2) {
+			$$invalidate(7, startOfWeek = getStartOfWeek(days));
+		}
+	};
+
+	return [
+		weekNum,
+		days,
+		onHover,
+		onClick,
+		onContextMenu,
+		selectedId,
+		metadata,
+		startOfWeek,
+		click_handler,
+		contextmenu_handler,
+		pointerover_handler
+	];
+}
+
+class WeekNum extends SvelteComponent {
+	constructor(options) {
+		super();
+		if (!document.getElementById("svelte-egt0yd-style")) add_css$1();
+
+		init(this, options, instance$1, create_fragment$1, not_equal, {
+			weekNum: 0,
+			days: 1,
+			metadata: 6,
+			onHover: 2,
+			onClick: 3,
+			onContextMenu: 4,
+			selectedId: 5
+		});
+	}
+}
+
+async function metadataReducer(promisedMetadata) {
+    const meta = {
+        dots: [],
+        classes: [],
+        dataAttributes: {},
+    };
+    const metas = await Promise.all(promisedMetadata);
+    return metas.reduce((acc, meta) => ({
+        classes: [...acc.classes, ...(meta.classes || [])],
+        dataAttributes: Object.assign(acc.dataAttributes, meta.dataAttributes),
+        dots: [...acc.dots, ...(meta.dots || [])],
+    }), meta);
+}
+function getDailyMetadata(sources, date, ..._args) {
+    return metadataReducer(sources.map((source) => source.getDailyMetadata(date)));
+}
+function getWeeklyMetadata(sources, date, ..._args) {
+    return metadataReducer(sources.map((source) => source.getWeeklyMetadata(date)));
+}
+
+/* src/components/Calendar.svelte generated by Svelte v3.35.0 */
+
+function add_css() {
+	var style = element("style");
+	style.id = "svelte-pcimu8-style";
+	style.textContent = ".container.svelte-pcimu8{--color-background-heading:transparent;--color-background-day:transparent;--color-background-weeknum:transparent;--color-background-weekend:transparent;--color-dot:var(--text-muted);--color-arrow:var(--text-muted);--color-button:var(--text-muted);--color-text-title:var(--text-normal);--color-text-heading:var(--text-muted);--color-text-day:var(--text-normal);--color-text-today:var(--interactive-accent);--color-text-weeknum:var(--text-muted)}.container.svelte-pcimu8{padding:0 8px}.container.is-mobile.svelte-pcimu8{padding:0}th.svelte-pcimu8{text-align:center}.weekend.svelte-pcimu8{background-color:var(--color-background-weekend)}.calendar.svelte-pcimu8{border-collapse:collapse;width:100%}th.svelte-pcimu8{background-color:var(--color-background-heading);color:var(--color-text-heading);font-size:0.6em;letter-spacing:1px;padding:4px;text-transform:uppercase}";
+	append(document.head, style);
+}
+
+function get_each_context(ctx, list, i) {
+	const child_ctx = ctx.slice();
+	child_ctx[18] = list[i];
+	return child_ctx;
+}
+
+function get_each_context_1(ctx, list, i) {
+	const child_ctx = ctx.slice();
+	child_ctx[21] = list[i];
+	return child_ctx;
+}
+
+function get_each_context_2(ctx, list, i) {
+	const child_ctx = ctx.slice();
+	child_ctx[24] = list[i];
+	return child_ctx;
+}
+
+function get_each_context_3(ctx, list, i) {
+	const child_ctx = ctx.slice();
+	child_ctx[27] = list[i];
+	return child_ctx;
+}
+
+// (55:6) {#if showWeekNums}
+function create_if_block_2(ctx) {
+	let col;
+
+	return {
+		c() {
+			col = element("col");
+		},
+		m(target, anchor) {
+			insert(target, col, anchor);
+		},
+		d(detaching) {
+			if (detaching) detach(col);
+		}
+	};
+}
+
+// (58:6) {#each month[1].days as date}
+function create_each_block_3(ctx) {
+	let col;
+
+	return {
+		c() {
+			col = element("col");
+			attr(col, "class", "svelte-pcimu8");
+			toggle_class(col, "weekend", isWeekend(/*date*/ ctx[27]));
+		},
+		m(target, anchor) {
+			insert(target, col, anchor);
+		},
+		p(ctx, dirty) {
+			if (dirty & /*isWeekend, month*/ 16384) {
+				toggle_class(col, "weekend", isWeekend(/*date*/ ctx[27]));
+			}
+		},
+		d(detaching) {
+			if (detaching) detach(col);
+		}
+	};
+}
+
+// (64:8) {#if showWeekNums}
+function create_if_block_1(ctx) {
+	let th;
+
+	return {
+		c() {
+			th = element("th");
+			th.textContent = "W";
+			attr(th, "class", "svelte-pcimu8");
+		},
+		m(target, anchor) {
+			insert(target, th, anchor);
+		},
+		d(detaching) {
+			if (detaching) detach(th);
+		}
+	};
+}
+
+// (67:8) {#each daysOfWeek as dayOfWeek}
+function create_each_block_2(ctx) {
+	let th;
+	let t_value = /*dayOfWeek*/ ctx[24] + "";
+	let t;
+
+	return {
+		c() {
+			th = element("th");
+			t = text(t_value);
+			attr(th, "class", "svelte-pcimu8");
+		},
+		m(target, anchor) {
+			insert(target, th, anchor);
+			append(th, t);
+		},
+		p(ctx, dirty) {
+			if (dirty & /*daysOfWeek*/ 32768 && t_value !== (t_value = /*dayOfWeek*/ ctx[24] + "")) set_data(t, t_value);
+		},
+		d(detaching) {
+			if (detaching) detach(th);
+		}
+	};
+}
+
+// (75:10) {#if showWeekNums}
+function create_if_block(ctx) {
+	let weeknum;
+	let current;
+
+	const weeknum_spread_levels = [
+		/*week*/ ctx[18],
+		{
+			metadata: getWeeklyMetadata(/*sources*/ ctx[8], /*week*/ ctx[18].days[0], /*today*/ ctx[10])
+		},
+		{ onClick: /*onClickWeek*/ ctx[7] },
+		{
+			onContextMenu: /*onContextMenuWeek*/ ctx[5]
+		},
+		{ onHover: /*onHoverWeek*/ ctx[3] },
+		{ selectedId: /*selectedId*/ ctx[9] }
+	];
+
+	let weeknum_props = {};
+
+	for (let i = 0; i < weeknum_spread_levels.length; i += 1) {
+		weeknum_props = assign(weeknum_props, weeknum_spread_levels[i]);
+	}
+
+	weeknum = new WeekNum({ props: weeknum_props });
+
+	return {
+		c() {
+			create_component(weeknum.$$.fragment);
+		},
+		m(target, anchor) {
+			mount_component(weeknum, target, anchor);
+			current = true;
+		},
+		p(ctx, dirty) {
+			const weeknum_changes = (dirty & /*month, getWeeklyMetadata, sources, today, onClickWeek, onContextMenuWeek, onHoverWeek, selectedId*/ 18344)
+			? get_spread_update(weeknum_spread_levels, [
+					dirty & /*month*/ 16384 && get_spread_object(/*week*/ ctx[18]),
+					dirty & /*getWeeklyMetadata, sources, month, today*/ 17664 && {
+						metadata: getWeeklyMetadata(/*sources*/ ctx[8], /*week*/ ctx[18].days[0], /*today*/ ctx[10])
+					},
+					dirty & /*onClickWeek*/ 128 && { onClick: /*onClickWeek*/ ctx[7] },
+					dirty & /*onContextMenuWeek*/ 32 && {
+						onContextMenu: /*onContextMenuWeek*/ ctx[5]
+					},
+					dirty & /*onHoverWeek*/ 8 && { onHover: /*onHoverWeek*/ ctx[3] },
+					dirty & /*selectedId*/ 512 && { selectedId: /*selectedId*/ ctx[9] }
+				])
+			: {};
+
+			weeknum.$set(weeknum_changes);
+		},
+		i(local) {
+			if (current) return;
+			transition_in(weeknum.$$.fragment, local);
+			current = true;
+		},
+		o(local) {
+			transition_out(weeknum.$$.fragment, local);
+			current = false;
+		},
+		d(detaching) {
+			destroy_component(weeknum, detaching);
+		}
+	};
+}
+
+// (85:10) {#each week.days as day (day.format())}
+function create_each_block_1(key_1, ctx) {
+	let first;
+	let day;
+	let current;
+
+	day = new Day({
+			props: {
+				date: /*day*/ ctx[21],
+				today: /*today*/ ctx[10],
+				displayedMonth: /*displayedMonth*/ ctx[0],
+				onClick: /*onClickDay*/ ctx[6],
+				onContextMenu: /*onContextMenuDay*/ ctx[4],
+				onHover: /*onHoverDay*/ ctx[2],
+				metadata: getDailyMetadata(/*sources*/ ctx[8], /*day*/ ctx[21], /*today*/ ctx[10]),
+				selectedId: /*selectedId*/ ctx[9]
+			}
+		});
+
+	return {
+		key: key_1,
+		first: null,
+		c() {
+			first = empty();
+			create_component(day.$$.fragment);
+			this.first = first;
+		},
+		m(target, anchor) {
+			insert(target, first, anchor);
+			mount_component(day, target, anchor);
+			current = true;
+		},
+		p(new_ctx, dirty) {
+			ctx = new_ctx;
+			const day_changes = {};
+			if (dirty & /*month*/ 16384) day_changes.date = /*day*/ ctx[21];
+			if (dirty & /*today*/ 1024) day_changes.today = /*today*/ ctx[10];
+			if (dirty & /*displayedMonth*/ 1) day_changes.displayedMonth = /*displayedMonth*/ ctx[0];
+			if (dirty & /*onClickDay*/ 64) day_changes.onClick = /*onClickDay*/ ctx[6];
+			if (dirty & /*onContextMenuDay*/ 16) day_changes.onContextMenu = /*onContextMenuDay*/ ctx[4];
+			if (dirty & /*onHoverDay*/ 4) day_changes.onHover = /*onHoverDay*/ ctx[2];
+			if (dirty & /*sources, month, today*/ 17664) day_changes.metadata = getDailyMetadata(/*sources*/ ctx[8], /*day*/ ctx[21], /*today*/ ctx[10]);
+			if (dirty & /*selectedId*/ 512) day_changes.selectedId = /*selectedId*/ ctx[9];
+			day.$set(day_changes);
+		},
+		i(local) {
+			if (current) return;
+			transition_in(day.$$.fragment, local);
+			current = true;
+		},
+		o(local) {
+			transition_out(day.$$.fragment, local);
+			current = false;
+		},
+		d(detaching) {
+			if (detaching) detach(first);
+			destroy_component(day, detaching);
+		}
+	};
+}
+
+// (73:6) {#each month as week (week.weekNum)}
+function create_each_block(key_1, ctx) {
+	let tr;
+	let t0;
+	let each_blocks = [];
+	let each_1_lookup = new Map();
+	let t1;
+	let current;
+	let if_block = /*showWeekNums*/ ctx[1] && create_if_block(ctx);
+	let each_value_1 = /*week*/ ctx[18].days;
+	const get_key = ctx => /*day*/ ctx[21].format();
+
+	for (let i = 0; i < each_value_1.length; i += 1) {
+		let child_ctx = get_each_context_1(ctx, each_value_1, i);
+		let key = get_key(child_ctx);
+		each_1_lookup.set(key, each_blocks[i] = create_each_block_1(key, child_ctx));
+	}
+
+	return {
+		key: key_1,
+		first: null,
+		c() {
+			tr = element("tr");
+			if (if_block) if_block.c();
+			t0 = space();
+
+			for (let i = 0; i < each_blocks.length; i += 1) {
+				each_blocks[i].c();
+			}
+
+			t1 = space();
+			this.first = tr;
+		},
+		m(target, anchor) {
+			insert(target, tr, anchor);
+			if (if_block) if_block.m(tr, null);
+			append(tr, t0);
+
+			for (let i = 0; i < each_blocks.length; i += 1) {
+				each_blocks[i].m(tr, null);
+			}
+
+			append(tr, t1);
+			current = true;
+		},
+		p(new_ctx, dirty) {
+			ctx = new_ctx;
+
+			if (/*showWeekNums*/ ctx[1]) {
+				if (if_block) {
+					if_block.p(ctx, dirty);
+
+					if (dirty & /*showWeekNums*/ 2) {
+						transition_in(if_block, 1);
+					}
+				} else {
+					if_block = create_if_block(ctx);
+					if_block.c();
+					transition_in(if_block, 1);
+					if_block.m(tr, t0);
+				}
+			} else if (if_block) {
+				group_outros();
+
+				transition_out(if_block, 1, 1, () => {
+					if_block = null;
+				});
+
+				check_outros();
+			}
+
+			if (dirty & /*month, today, displayedMonth, onClickDay, onContextMenuDay, onHoverDay, getDailyMetadata, sources, selectedId*/ 18261) {
+				each_value_1 = /*week*/ ctx[18].days;
+				group_outros();
+				each_blocks = update_keyed_each(each_blocks, dirty, get_key, 1, ctx, each_value_1, each_1_lookup, tr, outro_and_destroy_block, create_each_block_1, t1, get_each_context_1);
+				check_outros();
+			}
+		},
+		i(local) {
+			if (current) return;
+			transition_in(if_block);
+
+			for (let i = 0; i < each_value_1.length; i += 1) {
+				transition_in(each_blocks[i]);
+			}
+
+			current = true;
+		},
+		o(local) {
+			transition_out(if_block);
+
+			for (let i = 0; i < each_blocks.length; i += 1) {
+				transition_out(each_blocks[i]);
+			}
+
+			current = false;
+		},
+		d(detaching) {
+			if (detaching) detach(tr);
+			if (if_block) if_block.d();
+
+			for (let i = 0; i < each_blocks.length; i += 1) {
+				each_blocks[i].d();
+			}
+		}
+	};
+}
+
+function create_fragment$7(ctx) {
+	let div;
+	let nav;
+	let t0;
+	let table;
+	let colgroup;
+	let t1;
+	let t2;
+	let thead;
+	let tr;
+	let t3;
+	let t4;
+	let tbody;
+	let each_blocks = [];
+	let each2_lookup = new Map();
+	let current;
+
+	nav = new Nav({
+			props: {
+				today: /*today*/ ctx[10],
+				displayedMonth: /*displayedMonth*/ ctx[0],
+				incrementDisplayedMonth: /*incrementDisplayedMonth*/ ctx[11],
+				decrementDisplayedMonth: /*decrementDisplayedMonth*/ ctx[12],
+				resetDisplayedMonth: /*resetDisplayedMonth*/ ctx[13]
+			}
+		});
+
+	let if_block0 = /*showWeekNums*/ ctx[1] && create_if_block_2();
+	let each_value_3 = /*month*/ ctx[14][1].days;
+	let each_blocks_2 = [];
+
+	for (let i = 0; i < each_value_3.length; i += 1) {
+		each_blocks_2[i] = create_each_block_3(get_each_context_3(ctx, each_value_3, i));
+	}
+
+	let if_block1 = /*showWeekNums*/ ctx[1] && create_if_block_1();
+	let each_value_2 = /*daysOfWeek*/ ctx[15];
+	let each_blocks_1 = [];
+
+	for (let i = 0; i < each_value_2.length; i += 1) {
+		each_blocks_1[i] = create_each_block_2(get_each_context_2(ctx, each_value_2, i));
+	}
+
+	let each_value = /*month*/ ctx[14];
+	const get_key = ctx => /*week*/ ctx[18].weekNum;
+
+	for (let i = 0; i < each_value.length; i += 1) {
+		let child_ctx = get_each_context(ctx, each_value, i);
+		let key = get_key(child_ctx);
+		each2_lookup.set(key, each_blocks[i] = create_each_block(key, child_ctx));
+	}
+
+	return {
+		c() {
+			div = element("div");
+			create_component(nav.$$.fragment);
+			t0 = space();
+			table = element("table");
+			colgroup = element("colgroup");
+			if (if_block0) if_block0.c();
+			t1 = space();
+
+			for (let i = 0; i < each_blocks_2.length; i += 1) {
+				each_blocks_2[i].c();
+			}
+
+			t2 = space();
+			thead = element("thead");
+			tr = element("tr");
+			if (if_block1) if_block1.c();
+			t3 = space();
+
+			for (let i = 0; i < each_blocks_1.length; i += 1) {
+				each_blocks_1[i].c();
+			}
+
+			t4 = space();
+			tbody = element("tbody");
+
+			for (let i = 0; i < each_blocks.length; i += 1) {
+				each_blocks[i].c();
+			}
+
+			attr(table, "class", "calendar svelte-pcimu8");
+			attr(div, "id", "calendar-container");
+			attr(div, "class", "container svelte-pcimu8");
+			toggle_class(div, "is-mobile", /*isMobile*/ ctx[16]);
+		},
+		m(target, anchor) {
+			insert(target, div, anchor);
+			mount_component(nav, div, null);
+			append(div, t0);
+			append(div, table);
+			append(table, colgroup);
+			if (if_block0) if_block0.m(colgroup, null);
+			append(colgroup, t1);
+
+			for (let i = 0; i < each_blocks_2.length; i += 1) {
+				each_blocks_2[i].m(colgroup, null);
+			}
+
+			append(table, t2);
+			append(table, thead);
+			append(thead, tr);
+			if (if_block1) if_block1.m(tr, null);
+			append(tr, t3);
+
+			for (let i = 0; i < each_blocks_1.length; i += 1) {
+				each_blocks_1[i].m(tr, null);
+			}
+
+			append(table, t4);
+			append(table, tbody);
+
+			for (let i = 0; i < each_blocks.length; i += 1) {
+				each_blocks[i].m(tbody, null);
+			}
+
+			current = true;
+		},
+		p(ctx, [dirty]) {
+			const nav_changes = {};
+			if (dirty & /*today*/ 1024) nav_changes.today = /*today*/ ctx[10];
+			if (dirty & /*displayedMonth*/ 1) nav_changes.displayedMonth = /*displayedMonth*/ ctx[0];
+			nav.$set(nav_changes);
+
+			if (/*showWeekNums*/ ctx[1]) {
+				if (if_block0) ; else {
+					if_block0 = create_if_block_2();
+					if_block0.c();
+					if_block0.m(colgroup, t1);
+				}
+			} else if (if_block0) {
+				if_block0.d(1);
+				if_block0 = null;
+			}
+
+			if (dirty & /*isWeekend, month*/ 16384) {
+				each_value_3 = /*month*/ ctx[14][1].days;
+				let i;
+
+				for (i = 0; i < each_value_3.length; i += 1) {
+					const child_ctx = get_each_context_3(ctx, each_value_3, i);
+
+					if (each_blocks_2[i]) {
+						each_blocks_2[i].p(child_ctx, dirty);
+					} else {
+						each_blocks_2[i] = create_each_block_3(child_ctx);
+						each_blocks_2[i].c();
+						each_blocks_2[i].m(colgroup, null);
+					}
+				}
+
+				for (; i < each_blocks_2.length; i += 1) {
+					each_blocks_2[i].d(1);
+				}
+
+				each_blocks_2.length = each_value_3.length;
+			}
+
+			if (/*showWeekNums*/ ctx[1]) {
+				if (if_block1) ; else {
+					if_block1 = create_if_block_1();
+					if_block1.c();
+					if_block1.m(tr, t3);
+				}
+			} else if (if_block1) {
+				if_block1.d(1);
+				if_block1 = null;
+			}
+
+			if (dirty & /*daysOfWeek*/ 32768) {
+				each_value_2 = /*daysOfWeek*/ ctx[15];
+				let i;
+
+				for (i = 0; i < each_value_2.length; i += 1) {
+					const child_ctx = get_each_context_2(ctx, each_value_2, i);
+
+					if (each_blocks_1[i]) {
+						each_blocks_1[i].p(child_ctx, dirty);
+					} else {
+						each_blocks_1[i] = create_each_block_2(child_ctx);
+						each_blocks_1[i].c();
+						each_blocks_1[i].m(tr, null);
+					}
+				}
+
+				for (; i < each_blocks_1.length; i += 1) {
+					each_blocks_1[i].d(1);
+				}
+
+				each_blocks_1.length = each_value_2.length;
+			}
+
+			if (dirty & /*month, today, displayedMonth, onClickDay, onContextMenuDay, onHoverDay, getDailyMetadata, sources, selectedId, getWeeklyMetadata, onClickWeek, onContextMenuWeek, onHoverWeek, showWeekNums*/ 18431) {
+				each_value = /*month*/ ctx[14];
+				group_outros();
+				each_blocks = update_keyed_each(each_blocks, dirty, get_key, 1, ctx, each_value, each2_lookup, tbody, outro_and_destroy_block, create_each_block, null, get_each_context);
+				check_outros();
+			}
+		},
+		i(local) {
+			if (current) return;
+			transition_in(nav.$$.fragment, local);
+
+			for (let i = 0; i < each_value.length; i += 1) {
+				transition_in(each_blocks[i]);
+			}
+
+			current = true;
+		},
+		o(local) {
+			transition_out(nav.$$.fragment, local);
+
+			for (let i = 0; i < each_blocks.length; i += 1) {
+				transition_out(each_blocks[i]);
+			}
+
+			current = false;
+		},
+		d(detaching) {
+			if (detaching) detach(div);
+			destroy_component(nav);
+			if (if_block0) if_block0.d();
+			destroy_each(each_blocks_2, detaching);
+			if (if_block1) if_block1.d();
+			destroy_each(each_blocks_1, detaching);
+
+			for (let i = 0; i < each_blocks.length; i += 1) {
+				each_blocks[i].d();
+			}
+		}
+	};
+}
+
+function instance$7($$self, $$props, $$invalidate) {
+	
+	
+	let { localeData } = $$props;
+	let { showWeekNums = false } = $$props;
+	let { onHoverDay } = $$props;
+	let { onHoverWeek } = $$props;
+	let { onContextMenuDay } = $$props;
+	let { onContextMenuWeek } = $$props;
+	let { onClickDay } = $$props;
+	let { onClickWeek } = $$props;
+	let { sources = [] } = $$props;
+	let { selectedId } = $$props;
+	let { today = window.moment() } = $$props;
+	let { displayedMonth = today } = $$props;
+	let month;
+	let daysOfWeek;
+
+	// eslint-disable-next-line @typescript-eslint/no-explicit-any
+	let isMobile = window.app.isMobile;
+
+	function incrementDisplayedMonth() {
+		$$invalidate(0, displayedMonth = displayedMonth.clone().add(1, "month"));
+	}
+
+	function decrementDisplayedMonth() {
+		$$invalidate(0, displayedMonth = displayedMonth.clone().subtract(1, "month"));
+	}
+
+	function resetDisplayedMonth() {
+		$$invalidate(0, displayedMonth = today.clone());
+	}
+
+	$$self.$$set = $$props => {
+		if ("localeData" in $$props) $$invalidate(17, localeData = $$props.localeData);
+		if ("showWeekNums" in $$props) $$invalidate(1, showWeekNums = $$props.showWeekNums);
+		if ("onHoverDay" in $$props) $$invalidate(2, onHoverDay = $$props.onHoverDay);
+		if ("onHoverWeek" in $$props) $$invalidate(3, onHoverWeek = $$props.onHoverWeek);
+		if ("onContextMenuDay" in $$props) $$invalidate(4, onContextMenuDay = $$props.onContextMenuDay);
+		if ("onContextMenuWeek" in $$props) $$invalidate(5, onContextMenuWeek = $$props.onContextMenuWeek);
+		if ("onClickDay" in $$props) $$invalidate(6, onClickDay = $$props.onClickDay);
+		if ("onClickWeek" in $$props) $$invalidate(7, onClickWeek = $$props.onClickWeek);
+		if ("sources" in $$props) $$invalidate(8, sources = $$props.sources);
+		if ("selectedId" in $$props) $$invalidate(9, selectedId = $$props.selectedId);
+		if ("today" in $$props) $$invalidate(10, today = $$props.today);
+		if ("displayedMonth" in $$props) $$invalidate(0, displayedMonth = $$props.displayedMonth);
+	};
+
+	$$self.$$.update = () => {
+		if ($$self.$$.dirty & /*displayedMonth, localeData*/ 131073) {
+			$$invalidate(14, month = getMonth(displayedMonth, localeData));
+		}
+
+		if ($$self.$$.dirty & /*today, localeData*/ 132096) {
+			$$invalidate(15, daysOfWeek = getDaysOfWeek(today, localeData));
+		}
+	};
+
+	return [
+		displayedMonth,
+		showWeekNums,
+		onHoverDay,
+		onHoverWeek,
+		onContextMenuDay,
+		onContextMenuWeek,
+		onClickDay,
+		onClickWeek,
+		sources,
+		selectedId,
+		today,
+		incrementDisplayedMonth,
+		decrementDisplayedMonth,
+		resetDisplayedMonth,
+		month,
+		daysOfWeek,
+		isMobile,
+		localeData
+	];
+}
+
+class Calendar$1 extends SvelteComponent {
+	constructor(options) {
+		super();
+		if (!document.getElementById("svelte-pcimu8-style")) add_css();
+
+		init(this, options, instance$7, create_fragment$7, not_equal, {
+			localeData: 17,
+			showWeekNums: 1,
+			onHoverDay: 2,
+			onHoverWeek: 3,
+			onContextMenuDay: 4,
+			onContextMenuWeek: 5,
+			onClickDay: 6,
+			onClickWeek: 7,
+			sources: 8,
+			selectedId: 9,
+			today: 10,
+			displayedMonth: 0,
+			incrementDisplayedMonth: 11,
+			decrementDisplayedMonth: 12,
+			resetDisplayedMonth: 13
+		});
+	}
+
+	get incrementDisplayedMonth() {
+		return this.$$.ctx[11];
+	}
+
+	get decrementDisplayedMonth() {
+		return this.$$.ctx[12];
+	}
+
+	get resetDisplayedMonth() {
+		return this.$$.ctx[13];
+	}
+}
+
+const langToMomentLocale = {
+    en: "en-gb",
+    zh: "zh-cn",
+    "zh-TW": "zh-tw",
+    ru: "ru",
+    ko: "ko",
+    it: "it",
+    id: "id",
+    ro: "ro",
+    "pt-BR": "pt-br",
+    cz: "cs",
+    da: "da",
+    de: "de",
+    es: "es",
+    fr: "fr",
+    no: "nn",
+    pl: "pl",
+    pt: "pt",
+    tr: "tr",
+    hi: "hi",
+    nl: "nl",
+    ar: "ar",
+    ja: "ja",
+};
+const weekdays = [
+    "sunday",
+    "monday",
+    "tuesday",
+    "wednesday",
+    "thursday",
+    "friday",
+    "saturday",
+];
+function overrideGlobalMomentWeekStart(weekStart) {
+    const { moment } = window;
+    const currentLocale = moment.locale();
+    // Save the initial locale weekspec so that we can restore
+    // it when toggling between the different options in settings.
+    if (!window._bundledLocaleWeekSpec) {
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        window._bundledLocaleWeekSpec = moment.localeData()._week;
+    }
+    if (weekStart === "locale") {
+        moment.updateLocale(currentLocale, {
+            week: window._bundledLocaleWeekSpec,
+        });
+    }
+    else {
+        moment.updateLocale(currentLocale, {
+            week: {
+                dow: weekdays.indexOf(weekStart) || 0,
+            },
+        });
+    }
+}
+/**
+ * Sets the locale used by the calendar. This allows the calendar to
+ * default to the user's locale (e.g. Start Week on Sunday/Monday/Friday)
+ *
+ * @param localeOverride locale string (e.g. "en-US")
+ */
+function configureGlobalMomentLocale(localeOverride = "system-default", weekStart = "locale") {
+    var _a;
+    const obsidianLang = localStorage.getItem("language") || "en";
+    const systemLang = (_a = navigator.language) === null || _a === void 0 ? void 0 : _a.toLowerCase();
+    let momentLocale = langToMomentLocale[obsidianLang];
+    if (localeOverride !== "system-default") {
+        momentLocale = localeOverride;
+    }
+    else if (systemLang.startsWith(obsidianLang)) {
+        // If the system locale is more specific (en-gb vs en), use the system locale.
+        momentLocale = systemLang;
+    }
+    const currentLocale = window.moment.locale(momentLocale);
+    console.debug(`[Calendar] Trying to switch Moment.js global locale to ${momentLocale}, got ${currentLocale}`);
+    overrideGlobalMomentWeekStart(weekStart);
+    return currentLocale;
+}
+
+/* src/ui/Calendar.svelte generated by Svelte v3.35.0 */
+
+function create_fragment(ctx) {
+	let calendarbase;
+	let updating_displayedMonth;
+	let current;
+
+	function calendarbase_displayedMonth_binding(value) {
+		/*calendarbase_displayedMonth_binding*/ ctx[12](value);
+	}
+
+	let calendarbase_props = {
+		sources: /*sources*/ ctx[1],
+		today: /*today*/ ctx[9],
+		onHoverDay: /*onHoverDay*/ ctx[2],
+		onHoverWeek: /*onHoverWeek*/ ctx[3],
+		onContextMenuDay: /*onContextMenuDay*/ ctx[6],
+		onContextMenuWeek: /*onContextMenuWeek*/ ctx[7],
+		onClickDay: /*onClickDay*/ ctx[4],
+		onClickWeek: /*onClickWeek*/ ctx[5],
+		localeData: /*today*/ ctx[9].localeData(),
+		selectedId: /*$activeFile*/ ctx[10],
+		showWeekNums: /*$settings*/ ctx[8].showWeeklyNote
+	};
+
+	if (/*displayedMonth*/ ctx[0] !== void 0) {
+		calendarbase_props.displayedMonth = /*displayedMonth*/ ctx[0];
+	}
+
+	calendarbase = new Calendar$1({ props: calendarbase_props });
+	binding_callbacks$1.push(() => bind(calendarbase, "displayedMonth", calendarbase_displayedMonth_binding));
+
+	return {
+		c() {
+			create_component$1(calendarbase.$$.fragment);
+		},
+		m(target, anchor) {
+			mount_component$1(calendarbase, target, anchor);
+			current = true;
+		},
+		p(ctx, [dirty]) {
+			const calendarbase_changes = {};
+			if (dirty & /*sources*/ 2) calendarbase_changes.sources = /*sources*/ ctx[1];
+			if (dirty & /*today*/ 512) calendarbase_changes.today = /*today*/ ctx[9];
+			if (dirty & /*onHoverDay*/ 4) calendarbase_changes.onHoverDay = /*onHoverDay*/ ctx[2];
+			if (dirty & /*onHoverWeek*/ 8) calendarbase_changes.onHoverWeek = /*onHoverWeek*/ ctx[3];
+			if (dirty & /*onContextMenuDay*/ 64) calendarbase_changes.onContextMenuDay = /*onContextMenuDay*/ ctx[6];
+			if (dirty & /*onContextMenuWeek*/ 128) calendarbase_changes.onContextMenuWeek = /*onContextMenuWeek*/ ctx[7];
+			if (dirty & /*onClickDay*/ 16) calendarbase_changes.onClickDay = /*onClickDay*/ ctx[4];
+			if (dirty & /*onClickWeek*/ 32) calendarbase_changes.onClickWeek = /*onClickWeek*/ ctx[5];
+			if (dirty & /*today*/ 512) calendarbase_changes.localeData = /*today*/ ctx[9].localeData();
+			if (dirty & /*$activeFile*/ 1024) calendarbase_changes.selectedId = /*$activeFile*/ ctx[10];
+			if (dirty & /*$settings*/ 256) calendarbase_changes.showWeekNums = /*$settings*/ ctx[8].showWeeklyNote;
+
+			if (!updating_displayedMonth && dirty & /*displayedMonth*/ 1) {
+				updating_displayedMonth = true;
+				calendarbase_changes.displayedMonth = /*displayedMonth*/ ctx[0];
+				add_flush_callback(() => updating_displayedMonth = false);
+			}
+
+			calendarbase.$set(calendarbase_changes);
+		},
+		i(local) {
+			if (current) return;
+			transition_in$1(calendarbase.$$.fragment, local);
+			current = true;
+		},
+		o(local) {
+			transition_out$1(calendarbase.$$.fragment, local);
+			current = false;
+		},
+		d(detaching) {
+			destroy_component$1(calendarbase, detaching);
+		}
+	};
+}
+
+function instance($$self, $$props, $$invalidate) {
+	let $settings;
+	let $activeFile;
+	component_subscribe($$self, settings, $$value => $$invalidate(8, $settings = $$value));
+	component_subscribe($$self, activeFile, $$value => $$invalidate(10, $activeFile = $$value));
+	
+	
+	let today;
+	let { displayedMonth = today } = $$props;
+	let { sources } = $$props;
+	let { onHoverDay } = $$props;
+	let { onHoverWeek } = $$props;
+	let { onClickDay } = $$props;
+	let { onClickWeek } = $$props;
+	let { onContextMenuDay } = $$props;
+	let { onContextMenuWeek } = $$props;
+
+	function tick() {
+		$$invalidate(9, today = window.moment());
+	}
+
+	function getToday(settings) {
+		configureGlobalMomentLocale(settings.localeOverride, settings.weekStart);
+		dailyNotes.reindex();
+		weeklyNotes.reindex();
+		return window.moment();
+	}
+
+	// 1 minute heartbeat to keep `today` reflecting the current day
+	let heartbeat = setInterval(
+		() => {
+			tick();
+			const isViewingCurrentMonth = displayedMonth.isSame(today, "day");
+
+			if (isViewingCurrentMonth) {
+				// if it's midnight on the last day of the month, this will
+				// update the display to show the new month.
+				$$invalidate(0, displayedMonth = today);
+			}
+		},
+		1000 * 60
+	);
+
+	onDestroy(() => {
+		clearInterval(heartbeat);
+	});
+
+	function calendarbase_displayedMonth_binding(value) {
+		displayedMonth = value;
+		$$invalidate(0, displayedMonth);
+	}
+
+	$$self.$$set = $$props => {
+		if ("displayedMonth" in $$props) $$invalidate(0, displayedMonth = $$props.displayedMonth);
+		if ("sources" in $$props) $$invalidate(1, sources = $$props.sources);
+		if ("onHoverDay" in $$props) $$invalidate(2, onHoverDay = $$props.onHoverDay);
+		if ("onHoverWeek" in $$props) $$invalidate(3, onHoverWeek = $$props.onHoverWeek);
+		if ("onClickDay" in $$props) $$invalidate(4, onClickDay = $$props.onClickDay);
+		if ("onClickWeek" in $$props) $$invalidate(5, onClickWeek = $$props.onClickWeek);
+		if ("onContextMenuDay" in $$props) $$invalidate(6, onContextMenuDay = $$props.onContextMenuDay);
+		if ("onContextMenuWeek" in $$props) $$invalidate(7, onContextMenuWeek = $$props.onContextMenuWeek);
+	};
+
+	$$self.$$.update = () => {
+		if ($$self.$$.dirty & /*$settings*/ 256) {
+			$$invalidate(9, today = getToday($settings));
+		}
+	};
+
+	return [
+		displayedMonth,
+		sources,
+		onHoverDay,
+		onHoverWeek,
+		onClickDay,
+		onClickWeek,
+		onContextMenuDay,
+		onContextMenuWeek,
+		$settings,
+		today,
+		$activeFile,
+		tick,
+		calendarbase_displayedMonth_binding
+	];
+}
+
+class Calendar extends SvelteComponent$1 {
+	constructor(options) {
+		super();
+
+		init$1(this, options, instance, create_fragment, not_equal$1, {
+			displayedMonth: 0,
+			sources: 1,
+			onHoverDay: 2,
+			onHoverWeek: 3,
+			onClickDay: 4,
+			onClickWeek: 5,
+			onContextMenuDay: 6,
+			onContextMenuWeek: 7,
+			tick: 11
+		});
+	}
+
+	get tick() {
+		return this.$$.ctx[11];
+	}
+}
+
+function showFileMenu(app, file, position) {
+    const fileMenu = new obsidian.Menu(app);
+    fileMenu.addItem((item) => item
+        .setTitle("Delete")
+        .setIcon("trash")
+        .onClick(() => {
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        app.fileManager.promptForFileDeletion(file);
+    }));
+    app.workspace.trigger("file-menu", fileMenu, file, "calendar-context-menu", null);
+    fileMenu.showAtPosition(position);
+}
+
+const getStreakClasses = (file) => {
+    return classList({
+        "has-note": !!file,
+    });
+};
+const streakSource = {
+    getDailyMetadata: async (date) => {
+        const file = getDailyNote_1(date, get_store_value(dailyNotes));
+        return {
+            classes: getStreakClasses(file),
+            dots: [],
+        };
+    },
+    getWeeklyMetadata: async (date) => {
+        const file = getWeeklyNote_1(date, get_store_value(weeklyNotes));
+        return {
+            classes: getStreakClasses(file),
+            dots: [],
+        };
+    },
+};
+
+function getNoteTags(note) {
+    var _a;
+    if (!note) {
+        return [];
+    }
+    const { metadataCache } = window.app;
+    const frontmatter = (_a = metadataCache.getFileCache(note)) === null || _a === void 0 ? void 0 : _a.frontmatter;
+    const tags = [];
+    if (frontmatter) {
+        const frontmatterTags = obsidian.parseFrontMatterTags(frontmatter) || [];
+        tags.push(...frontmatterTags);
+    }
+    // strip the '#' at the beginning
+    return tags.map((tag) => tag.substring(1));
+}
+function getFormattedTagAttributes(note) {
+    const attrs = {};
+    const tags = getNoteTags(note);
+    const [emojiTags, nonEmojiTags] = partition(tags, (tag) => /(?:[\u2700-\u27bf]|(?:\ud83c[\udde6-\uddff]){2}|[\ud800-\udbff][\udc00-\udfff]|[\u0023-\u0039]\ufe0f?\u20e3|\u3299|\u3297|\u303d|\u3030|\u24c2|\ud83c[\udd70-\udd71]|\ud83c[\udd7e-\udd7f]|\ud83c\udd8e|\ud83c[\udd91-\udd9a]|\ud83c[\udde6-\uddff]|\ud83c[\ude01-\ude02]|\ud83c\ude1a|\ud83c\ude2f|\ud83c[\ude32-\ude3a]|\ud83c[\ude50-\ude51]|\u203c|\u2049|[\u25aa-\u25ab]|\u25b6|\u25c0|[\u25fb-\u25fe]|\u00a9|\u00ae|\u2122|\u2139|\ud83c\udc04|[\u2600-\u26FF]|\u2b05|\u2b06|\u2b07|\u2b1b|\u2b1c|\u2b50|\u2b55|\u231a|\u231b|\u2328|\u23cf|[\u23e9-\u23f3]|[\u23f8-\u23fa]|\ud83c\udccf|\u2934|\u2935|[\u2190-\u21ff])/.test(tag));
+    if (nonEmojiTags) {
+        attrs["data-tags"] = nonEmojiTags.join(" ");
+    }
+    if (emojiTags) {
+        attrs["data-emoji-tag"] = emojiTags[0];
+    }
+    return attrs;
+}
+const customTagsSource = {
+    getDailyMetadata: async (date) => {
+        const file = getDailyNote_1(date, get_store_value(dailyNotes));
+        return {
+            dataAttributes: getFormattedTagAttributes(file),
+            dots: [],
+        };
+    },
+    getWeeklyMetadata: async (date) => {
+        const file = getWeeklyNote_1(date, get_store_value(weeklyNotes));
+        return {
+            dataAttributes: getFormattedTagAttributes(file),
+            dots: [],
+        };
+    },
+};
+
+async function getNumberOfRemainingTasks(note) {
+    if (!note) {
+        return 0;
+    }
+    const { vault } = window.app;
+    const fileContents = await vault.cachedRead(note);
+    return (fileContents.match(/(-|\*) \[ \]/g) || []).length;
+}
+async function getDotsForDailyNote$1(dailyNote) {
+    if (!dailyNote) {
+        return [];
+    }
+    const numTasks = await getNumberOfRemainingTasks(dailyNote);
+    const dots = [];
+    if (numTasks) {
+        dots.push({
+            className: "task",
+            color: "default",
+            isFilled: false,
+        });
+    }
+    return dots;
+}
+const tasksSource = {
+    getDailyMetadata: async (date) => {
+        const file = getDailyNote_1(date, get_store_value(dailyNotes));
+        const dots = await getDotsForDailyNote$1(file);
+        return {
+            dots,
+        };
+    },
+    getWeeklyMetadata: async (date) => {
+        const file = getWeeklyNote_1(date, get_store_value(weeklyNotes));
+        const dots = await getDotsForDailyNote$1(file);
+        return {
+            dots,
+        };
+    },
+};
+
+const NUM_MAX_DOTS = 5;
+async function getWordLengthAsDots(note) {
+    const { wordsPerDot = DEFAULT_WORDS_PER_DOT } = get_store_value(settings);
+    if (!note || wordsPerDot <= 0) {
+        return 0;
+    }
+    const fileContents = await window.app.vault.cachedRead(note);
+    const wordCount = getWordCount(fileContents);
+    const numDots = wordCount / wordsPerDot;
+    return clamp(Math.floor(numDots), 1, NUM_MAX_DOTS);
+}
+async function getDotsForDailyNote(dailyNote) {
+    if (!dailyNote) {
+        return [];
+    }
+    const numSolidDots = await getWordLengthAsDots(dailyNote);
+    const dots = [];
+    for (let i = 0; i < numSolidDots; i++) {
+        dots.push({
+            color: "default",
+            isFilled: true,
+        });
+    }
+    return dots;
+}
+const wordCountSource = {
+    getDailyMetadata: async (date) => {
+        const file = getDailyNote_1(date, get_store_value(dailyNotes));
+        const dots = await getDotsForDailyNote(file);
+        return {
+            dots,
+        };
+    },
+    getWeeklyMetadata: async (date) => {
+        const file = getWeeklyNote_1(date, get_store_value(weeklyNotes));
+        const dots = await getDotsForDailyNote(file);
+        return {
+            dots,
+        };
+    },
+};
+
+class CalendarView extends obsidian.ItemView {
+    constructor(leaf) {
+        super(leaf);
+        this.openOrCreateDailyNote = this.openOrCreateDailyNote.bind(this);
+        this.openOrCreateWeeklyNote = this.openOrCreateWeeklyNote.bind(this);
+        this.onNoteSettingsUpdate = this.onNoteSettingsUpdate.bind(this);
+        this.onFileCreated = this.onFileCreated.bind(this);
+        this.onFileDeleted = this.onFileDeleted.bind(this);
+        this.onFileModified = this.onFileModified.bind(this);
+        this.onFileOpen = this.onFileOpen.bind(this);
+        this.onHoverDay = this.onHoverDay.bind(this);
+        this.onHoverWeek = this.onHoverWeek.bind(this);
+        this.onContextMenuDay = this.onContextMenuDay.bind(this);
+        this.onContextMenuWeek = this.onContextMenuWeek.bind(this);
+        this.registerEvent(
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        this.app.workspace.on("periodic-notes:settings-updated", this.onNoteSettingsUpdate));
+        this.registerEvent(this.app.vault.on("create", this.onFileCreated));
+        this.registerEvent(this.app.vault.on("delete", this.onFileDeleted));
+        this.registerEvent(this.app.vault.on("modify", this.onFileModified));
+        this.registerEvent(this.app.workspace.on("file-open", this.onFileOpen));
+        this.settings = null;
+        settings.subscribe((val) => {
+            this.settings = val;
+            // Refresh the calendar if settings change
+            if (this.calendar) {
+                this.calendar.tick();
+            }
+        });
+    }
+    getViewType() {
+        return VIEW_TYPE_CALENDAR;
+    }
+    getDisplayText() {
+        return "Calendar";
+    }
+    getIcon() {
+        return "calendar-with-checkmark";
+    }
+    onClose() {
+        if (this.calendar) {
+            this.calendar.$destroy();
+        }
+        return Promise.resolve();
+    }
+    async onOpen() {
+        // Integration point: external plugins can listen for `calendar:open`
+        // to feed in additional sources.
+        const sources = [
+            customTagsSource,
+            streakSource,
+            wordCountSource,
+            tasksSource,
+        ];
+        this.app.workspace.trigger(TRIGGER_ON_OPEN, sources);
+        this.calendar = new Calendar({
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            target: this.contentEl,
+            props: {
+                onClickDay: this.openOrCreateDailyNote,
+                onClickWeek: this.openOrCreateWeeklyNote,
+                onHoverDay: this.onHoverDay,
+                onHoverWeek: this.onHoverWeek,
+                onContextMenuDay: this.onContextMenuDay,
+                onContextMenuWeek: this.onContextMenuWeek,
+                sources,
+            },
+        });
+    }
+    onHoverDay(date, targetEl, isMetaPressed) {
+        if (!isMetaPressed) {
+            return;
+        }
+        const { format } = getDailyNoteSettings_1();
+        const note = getDailyNote_1(date, get_store_value(dailyNotes));
+        this.app.workspace.trigger("link-hover", this, targetEl, date.format(format), note === null || note === void 0 ? void 0 : note.path);
+    }
+    onHoverWeek(date, targetEl, isMetaPressed) {
+        if (!isMetaPressed) {
+            return;
+        }
+        const note = getWeeklyNote_1(date, get_store_value(weeklyNotes));
+        const { format } = getWeeklyNoteSettings_1();
+        this.app.workspace.trigger("link-hover", this, targetEl, date.format(format), note === null || note === void 0 ? void 0 : note.path);
+    }
+    onContextMenuDay(date, event) {
+        const note = getDailyNote_1(date, get_store_value(dailyNotes));
+        if (!note) {
+            // If no file exists for a given day, show nothing.
+            return;
+        }
+        showFileMenu(this.app, note, {
+            x: event.pageX,
+            y: event.pageY,
+        });
+    }
+    onContextMenuWeek(date, event) {
+        const note = getWeeklyNote_1(date, get_store_value(weeklyNotes));
+        if (!note) {
+            // If no file exists for a given day, show nothing.
+            return;
+        }
+        showFileMenu(this.app, note, {
+            x: event.pageX,
+            y: event.pageY,
+        });
+    }
+    onNoteSettingsUpdate() {
+        dailyNotes.reindex();
+        weeklyNotes.reindex();
+        this.updateActiveFile();
+    }
+    async onFileDeleted(file) {
+        if (getDateFromFile_1(file, "day")) {
+            dailyNotes.reindex();
+            this.updateActiveFile();
+        }
+        if (getDateFromFile_1(file, "week")) {
+            weeklyNotes.reindex();
+            this.updateActiveFile();
+        }
+    }
+    async onFileModified(file) {
+        const date = getDateFromFile_1(file, "day") || getDateFromFile_1(file, "week");
+        if (date && this.calendar) {
+            this.calendar.tick();
+        }
+    }
+    onFileCreated(file) {
+        if (this.app.workspace.layoutReady && this.calendar) {
+            if (getDateFromFile_1(file, "day")) {
+                dailyNotes.reindex();
+                this.calendar.tick();
+            }
+            if (getDateFromFile_1(file, "week")) {
+                weeklyNotes.reindex();
+                this.calendar.tick();
+            }
+        }
+    }
+    onFileOpen(_file) {
+        if (this.app.workspace.layoutReady) {
+            this.updateActiveFile();
+        }
+    }
+    updateActiveFile() {
+        const { view } = this.app.workspace.activeLeaf;
+        let file = null;
+        if (view instanceof obsidian.FileView) {
+            file = view.file;
+        }
+        activeFile.setFile(file);
+        if (this.calendar) {
+            this.calendar.tick();
+        }
+    }
+    revealActiveNote() {
+        const { moment } = window;
+        const { activeLeaf } = this.app.workspace;
+        if (activeLeaf.view instanceof obsidian.FileView) {
+            // Check to see if the active note is a daily-note
+            let date = getDateFromFile_1(activeLeaf.view.file, "day");
+            if (date) {
+                this.calendar.$set({ displayedMonth: date });
+                return;
+            }
+            // Check to see if the active note is a weekly-note
+            const { format } = getWeeklyNoteSettings_1();
+            date = moment(activeLeaf.view.file.basename, format, true);
+            if (date.isValid()) {
+                this.calendar.$set({ displayedMonth: date });
+                return;
+            }
+        }
+    }
+    async openOrCreateWeeklyNote(date, inNewSplit) {
+        const { workspace } = this.app;
+        const startOfWeek = date.clone().startOf("week");
+        const existingFile = getWeeklyNote_1(date, get_store_value(weeklyNotes));
+        if (!existingFile) {
+            // File doesn't exist
+            tryToCreateWeeklyNote(startOfWeek, inNewSplit, this.settings, (file) => {
+                activeFile.setFile(file);
+            });
+            return;
+        }
+        const leaf = inNewSplit
+            ? workspace.splitActiveLeaf()
+            : workspace.getUnpinnedLeaf();
+        await leaf.openFile(existingFile);
+        activeFile.setFile(existingFile);
+    }
+    async openOrCreateDailyNote(date, inNewSplit) {
+        const { workspace } = this.app;
+        const existingFile = getDailyNote_1(date, get_store_value(dailyNotes));
+        if (!existingFile) {
+            // File doesn't exist
+            tryToCreateDailyNote(date, inNewSplit, this.settings, (dailyNote) => {
+                activeFile.setFile(dailyNote);
+            });
+            return;
+        }
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        const mode = this.app.vault.getConfig("defaultViewMode");
+        const leaf = inNewSplit
+            ? workspace.splitActiveLeaf()
+            : workspace.getUnpinnedLeaf();
+        await leaf.openFile(existingFile, { mode });
+        activeFile.setFile(existingFile);
+    }
+}
+
+class CalendarPlugin extends obsidian.Plugin {
+    onunload() {
+        this.app.workspace
+            .getLeavesOfType(VIEW_TYPE_CALENDAR)
+            .forEach((leaf) => leaf.detach());
+    }
+    async onload() {
+        this.register(settings.subscribe((value) => {
+            this.options = value;
+        }));
+        this.registerView(VIEW_TYPE_CALENDAR, (leaf) => (this.view = new CalendarView(leaf)));
+        this.addCommand({
+            id: "show-calendar-view",
+            name: "Open view",
+            checkCallback: (checking) => {
+                if (checking) {
+                    return (this.app.workspace.getLeavesOfType(VIEW_TYPE_CALENDAR).length === 0);
+                }
+                this.initLeaf();
+            },
+        });
+        this.addCommand({
+            id: "open-weekly-note",
+            name: "Open Weekly Note",
+            checkCallback: (checking) => {
+                if (checking) {
+                    return !appHasPeriodicNotesPluginLoaded();
+                }
+                this.view.openOrCreateWeeklyNote(window.moment(), false);
+            },
+        });
+        this.addCommand({
+            id: "reveal-active-note",
+            name: "Reveal active note",
+            callback: () => this.view.revealActiveNote(),
+        });
+        await this.loadOptions();
+        this.addSettingTab(new CalendarSettingsTab(this.app, this));
+        if (this.app.workspace.layoutReady) {
+            this.initLeaf();
+        }
+        else {
+            this.registerEvent(this.app.workspace.on("layout-ready", this.initLeaf.bind(this)));
+        }
+    }
+    initLeaf() {
+        if (this.app.workspace.getLeavesOfType(VIEW_TYPE_CALENDAR).length) {
+            return;
+        }
+        this.app.workspace.getRightLeaf(false).setViewState({
+            type: VIEW_TYPE_CALENDAR,
+        });
+    }
+    async loadOptions() {
+        const options = await this.loadData();
+        settings.update((old) => {
+            return Object.assign(Object.assign({}, old), (options || {}));
+        });
+        await this.saveData(this.options);
+    }
+    async writeOptions(changeOpts) {
+        settings.update((old) => (Object.assign(Object.assign({}, old), changeOpts(old))));
+        await this.saveData(this.options);
+    }
+}
+
+module.exports = CalendarPlugin;
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      {
+  "id": "calendar",
+  "name": "Calendar",
+  "description": "Calendar view of your daily notes",
+  "version": "1.5.10",
+  "author": "Liam Cain",
+  "authorUrl": "https://github.com/liamcain/",
+  "isDesktopOnly": false,
+  "minAppVersion": "0.9.11"
+}
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       {
+  "defaultPriorityMin": 10,
+  "defaultPriorityMax": 50,
+  "queueFolderPath": "99 存档",
+  "queueFileName": "我的写作计划.md",
+  "defaultQueueType": "afactor",
+  "skipAddNoteWindow": false,
+  "autoAddNewNotes": false
+}                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             'use strict';
+
+var obsidian = require('obsidian');
+
+class DateUtils {
+    static addDays(date, days) {
+        var result = new Date(date);
+        result.setDate(result.getDate() + days);
+        return result;
+    }
+    static formatDate(d) {
+        var month = "" + (d.getMonth() + 1);
+        var day = "" + d.getDate();
+        var year = d.getFullYear();
+        if (month.length < 2)
+            month = "0" + month;
+        if (day.length < 2)
+            day = "0" + day;
+        return [year, month, day].join("-");
+    }
+    static isValid(date) {
+        return date instanceof Date && !isNaN(date.valueOf());
+    }
+    static dateDifference(date1, date2) {
+        const oneDay = 24 * 60 * 60 * 1000; // hours*minutes*seconds*milliseconds
+        // @ts-ignore
+        return Math.round(Math.abs((date1 - date2) / oneDay));
+    }
+}
+
+class ObsidianUtilsBase {
+    constructor(app) {
+        this.app = app;
+    }
+}
+
+class LinkEx extends ObsidianUtilsBase {
+    constructor(app) {
+        super(app);
+    }
+    static addBrackets(link) {
+        if (!link.startsWith("[["))
+            link = "[[" + link;
+        if (!link.endsWith("]]"))
+            link = link + "]]";
+        return link;
+    }
+    static removeBrackets(link) {
+        if (link.startsWith("[[")) {
+            link = link.substr(2);
+        }
+        if (link.endsWith("]]")) {
+            link = link.substr(0, link.length - 2);
+        }
+        return link;
+    }
+    exists(link, source) {
+        let path = obsidian.getLinkpath(link);
+        let file = this.app.metadataCache.getFirstLinkpathDest(path, source);
+        return file instanceof obsidian.TFile;
+    }
+    getLinksIn(file) {
+        let links = this.app.metadataCache.getFileCache(file).links;
+        if (links)
+            return links
+                .map((l) => obsidian.getLinkpath(l.link))
+                .map((l) => this.app.metadataCache.getFirstLinkpathDest(l, file.path))
+                .map((f) => f.path);
+        return [];
+    }
+}
+
+class PriorityUtils {
+    static isValid(p) {
+        return !isNaN(p) && p >= 0 && p <= 100;
+    }
+    static getPriorityBetween(pMin, pMax) {
+        return Math.random() * (pMax - pMin) + pMin;
+    }
+}
+
+class Scheduler {
+    constructor(name) {
+        this.name = name;
+    }
+}
+class SimpleScheduler extends Scheduler {
+    constructor() {
+        super("simple");
+    }
+    roundOff(num, places) {
+        const x = Math.pow(10, places);
+        return Math.round(num * x) / x;
+    }
+    schedule(table, row) {
+        table.addRow(row);
+        // spread rows between 0 and 100 priority
+        let step = 99.9 / table.rows.length;
+        let curPri = step;
+        for (let row of table.rows) {
+            row.priority = this.roundOff(curPri, 2);
+            curPri += step;
+        }
+    }
+    toString() {
+        return `---
+scheduler: "${this.name}"
+---`;
+    }
+}
+class AFactorScheduler extends Scheduler {
+    // TODO:
+    constructor(afactor = 2, interval = 1) {
+        super("afactor");
+        this.afactor = this.isValidAFactor(afactor) ? afactor : 2;
+        this.interval = this.isValidInterval(interval) ? interval : 1;
+    }
+    schedule(table, row) {
+        row.nextRepDate = DateUtils.addDays(new Date(Date.now()), row.interval);
+        row.interval = this.afactor * row.interval;
+        table.addRow(row);
+    }
+    isValidAFactor(afactor) {
+        return !isNaN(afactor) && afactor >= 0;
+    }
+    isValidInterval(interval) {
+        return !isNaN(interval) && interval >= 0;
+    }
+    toString() {
+        return `---
+scheduler: "${this.name}"
+afactor: ${this.afactor}
+interval: ${this.interval}
+---`;
+    }
+}
+
+class LogTo {
+    static getTime() {
+        return new Date().toTimeString().substr(0, 8);
+    }
+    static Debug(message, notify = false) {
+        console.debug(`[${LogTo.getTime()}] (IW Plugin): ${message}`);
+        if (notify)
+            new obsidian.Notice(message);
+    }
+    static Console(message, notify = false) {
+        console.log(`[${LogTo.getTime()}] (IW Plugin): ${message}`);
+        if (notify)
+            new obsidian.Notice(message);
+    }
+}
+
+class MarkdownTable {
+    // TODO: just pass the gray matter object, replace text with contents.
+    constructor(plugin, frontMatter, text) {
+        this.header = `| Link | Priority | Notes | Interval | Next Rep |
+|------|----------|-------|---------|----------|`;
+        this.rows = [];
+        this.removedDeleted = false;
+        this.plugin = plugin;
+        this.scheduler = this.createScheduler(frontMatter);
+        if (text) {
+            text = text.trim();
+            let split = text.split("\n");
+            let idx = this.findYamlEnd(split);
+            if (idx !== -1)
+                // line after yaml + header
+                this.rows = this.parseRows(split.slice(idx + 1 + 2));
+        }
+    }
+    // TODO: test with blocks, different link settings
+    removeDeleted() {
+        let queuePath = this.plugin.queue.queuePath;
+        let exists = this.rows.filter((r) => this.plugin.links.exists(r.link, queuePath));
+        let removedNum = this.rows.length - exists.length;
+        this.rows = exists;
+        if (removedNum > 0) {
+            this.removedDeleted = true;
+            LogTo.Console(`Removed ${removedNum} reps with non-existent links.`);
+        }
+    }
+    hasRowWithLink(link) {
+        link = LinkEx.removeBrackets(link);
+        return this.rows.some((r) => r.link === link);
+    }
+    schedule(rep) {
+        this.scheduler.schedule(this, rep);
+    }
+    findYamlEnd(split) {
+        let ct = 0;
+        let idx = split.findIndex((value) => {
+            if (value === "---") {
+                if (ct === 1) {
+                    return true;
+                }
+                ct += 1;
+                return false;
+            }
+        });
+        return idx;
+    }
+    createScheduler(frontMatter) {
+        let scheduler;
+        // Default
+        if (this.plugin.settings.defaultQueueType === "afactor") {
+            scheduler = new AFactorScheduler();
+        }
+        else if (this.plugin.settings.defaultQueueType === "simple") {
+            scheduler = new SimpleScheduler();
+        }
+        // Specified in YAML
+        if (frontMatter) {
+            let schedulerName = frontMatter.data["scheduler"];
+            if (schedulerName && schedulerName === "simple") {
+                scheduler = new SimpleScheduler();
+            }
+            else if (schedulerName && schedulerName === "afactor") {
+                let afactor = Number(frontMatter.data["afactor"]);
+                let interval = Number(frontMatter.data["interval"]);
+                scheduler = new AFactorScheduler(afactor, interval);
+            }
+        }
+        return scheduler;
+    }
+    parseRows(arr) {
+        return arr.map((v) => this.parseRow(v));
+    }
+    parseRow(text) {
+        let arr = text
+            .substr(1, text.length - 1)
+            .split("|")
+            .map((r) => r.trim());
+        return new MarkdownTableRow(arr[0], Number(arr[1]), arr[2], Number(arr[3]), new Date(arr[4]));
+    }
+    hasReps() {
+        return this.rows.length > 0;
+    }
+    currentRep() {
+        this.sortReps();
+        return this.rows[0];
+    }
+    nextRep() {
+        this.sortReps();
+        return this.rows[1];
+    }
+    removeCurrentRep() {
+        this.sortReps();
+        let removed;
+        if (this.rows.length === 1) {
+            removed = this.rows.pop();
+        }
+        else if (this.rows.length > 1) {
+            removed = this.rows[0];
+            this.rows = this.rows.slice(1);
+        }
+        return removed;
+    }
+    sortReps() {
+        if (this.scheduler instanceof SimpleScheduler) {
+            this.sortByPriority();
+        }
+        else if (this.scheduler instanceof AFactorScheduler) {
+            this.sortByPriority();
+            this.sortByDue();
+        }
+    }
+    getReps() {
+        return this.rows;
+    }
+    sortByDue() {
+        this.rows.sort((a, b) => {
+            if (a.isDue() && !b.isDue())
+                return -1;
+            if (a.isDue() && b.isDue())
+                return 0;
+            if (!a.isDue() && b.isDue())
+                return 1;
+        });
+    }
+    sortByPriority() {
+        this.rows.sort((a, b) => {
+            let fst = +a.priority;
+            let snd = +b.priority;
+            if (fst > snd)
+                return 1;
+            else if (fst == snd)
+                return 0;
+            else if (fst < snd)
+                return -1;
+        });
+    }
+    addRow(row) {
+        this.rows.push(row);
+    }
+    sort(compareFn) {
+        if (this.rows)
+            this.rows = this.rows.sort(compareFn);
+    }
+    toString() {
+        let table = this.scheduler.toString() + "\n";
+        table += this.header;
+        if (this.rows) {
+            table += "\n" + this.rows.join("\n");
+        }
+        return table.trim();
+    }
+}
+class MarkdownTableRow {
+    constructor(link, priority, notes, interval = 1, nextRepDate = new Date("1970-01-01")) {
+        this.link = LinkEx.removeBrackets(link);
+        this.priority = PriorityUtils.isValid(priority) ? priority : 30;
+        this.notes = notes.replace(/(\r\n|\n|\r|\|)/gm, "");
+        this.interval = interval > 0 ? interval : 1;
+        this.nextRepDate = DateUtils.isValid(nextRepDate)
+            ? nextRepDate
+            : new Date("1970-01-01");
+    }
+    isDue() {
+        if (new Date(Date.now()) >= this.nextRepDate)
+            return true;
+        return false;
+    }
+    toString() {
+        let date = DateUtils.formatDate(this.nextRepDate);
+        let link = LinkEx.addBrackets(this.link);
+        return `| ${link} | ${this.priority} | ${this.notes} | ${this.interval} | ${date} |`;
+    }
+}
+
+var _nodeResolve_empty = {};
+
+var _nodeResolve_empty$1 = /*#__PURE__*/Object.freeze({
+    __proto__: null,
+    'default': _nodeResolve_empty
+});
+
+var toString = Object.prototype.toString;
+
+var kindOf = function kindOf(val) {
+  if (val === void 0) return 'undefined';
+  if (val === null) return 'null';
+
+  var type = typeof val;
+  if (type === 'boolean') return 'boolean';
+  if (type === 'string') return 'string';
+  if (type === 'number') return 'number';
+  if (type === 'symbol') return 'symbol';
+  if (type === 'function') {
+    return isGeneratorFn(val) ? 'generatorfunction' : 'function';
+  }
+
+  if (isArray(val)) return 'array';
+  if (isBuffer(val)) return 'buffer';
+  if (isArguments(val)) return 'arguments';
+  if (isDate(val)) return 'date';
+  if (isError(val)) return 'error';
+  if (isRegexp(val)) return 'regexp';
+
+  switch (ctorName(val)) {
+    case 'Symbol': return 'symbol';
+    case 'Promise': return 'promise';
+
+    // Set, Map, WeakSet, WeakMap
+    case 'WeakMap': return 'weakmap';
+    case 'WeakSet': return 'weakset';
+    case 'Map': return 'map';
+    case 'Set': return 'set';
+
+    // 8-bit typed arrays
+    case 'Int8Array': return 'int8array';
+    case 'Uint8Array': return 'uint8array';
+    case 'Uint8ClampedArray': return 'uint8clampedarray';
+
+    // 16-bit typed arrays
+    case 'Int16Array': return 'int16array';
+    case 'Uint16Array': return 'uint16array';
+
+    // 32-bit typed arrays
+    case 'Int32Array': return 'int32array';
+    case 'Uint32Array': return 'uint32array';
+    case 'Float32Array': return 'float32array';
+    case 'Float64Array': return 'float64array';
+  }
+
+  if (isGeneratorObj(val)) {
+    return 'generator';
+  }
+
+  // Non-plain objects
+  type = toString.call(val);
+  switch (type) {
+    case '[object Object]': return 'object';
+    // iterators
+    case '[object Map Iterator]': return 'mapiterator';
+    case '[object Set Iterator]': return 'setiterator';
+    case '[object String Iterator]': return 'stringiterator';
+    case '[object Array Iterator]': return 'arrayiterator';
+  }
+
+  // other
+  return type.slice(8, -1).toLowerCase().replace(/\s/g, '');
+};
+
+function ctorName(val) {
+  return typeof val.constructor === 'function' ? val.constructor.name : null;
+}
+
+function isArray(val) {
+  if (Array.isArray) return Array.isArray(val);
+  return val instanceof Array;
+}
+
+function isError(val) {
+  return val instanceof Error || (typeof val.message === 'string' && val.constructor && typeof val.constructor.stackTraceLimit === 'number');
+}
+
+function isDate(val) {
+  if (val instanceof Date) return true;
+  return typeof val.toDateString === 'function'
+    && typeof val.getDate === 'function'
+    && typeof val.setDate === 'function';
+}
+
+function isRegexp(val) {
+  if (val instanceof RegExp) return true;
+  return typeof val.flags === 'string'
+    && typeof val.ignoreCase === 'boolean'
+    && typeof val.multiline === 'boolean'
+    && typeof val.global === 'boolean';
+}
+
+function isGeneratorFn(name, val) {
+  return ctorName(name) === 'GeneratorFunction';
+}
+
+function isGeneratorObj(val) {
+  return typeof val.throw === 'function'
+    && typeof val.return === 'function'
+    && typeof val.next === 'function';
+}
+
+function isArguments(val) {
+  try {
+    if (typeof val.length === 'number' && typeof val.callee === 'function') {
+      return true;
+    }
+  } catch (err) {
+    if (err.message.indexOf('callee') !== -1) {
+      return true;
+    }
+  }
+  return false;
+}
+
+/**
+ * If you need to support Safari 5-7 (8-10 yr-old browser),
+ * take a look at https://github.com/feross/is-buffer
+ */
+
+function isBuffer(val) {
+  if (val.constructor && typeof val.constructor.isBuffer === 'function') {
+    return val.constructor.isBuffer(val);
+  }
+  return false;
+}
+
+/*!
+ * is-extendable <https://github.com/jonschlinkert/is-extendable>
+ *
+ * Copyright (c) 2015, Jon Schlinkert.
+ * Licensed under the MIT License.
+ */
+
+var isExtendable = function isExtendable(val) {
+  return typeof val !== 'undefined' && val !== null
+    && (typeof val === 'object' || typeof val === 'function');
+};
+
+var extendShallow = function extend(o/*, objects*/) {
+  if (!isExtendable(o)) { o = {}; }
+
+  var len = arguments.length;
+  for (var i = 1; i < len; i++) {
+    var obj = arguments[i];
+
+    if (isExtendable(obj)) {
+      assign(o, obj);
+    }
+  }
+  return o;
+};
+
+function assign(a, b) {
+  for (var key in b) {
+    if (hasOwn(b, key)) {
+      a[key] = b[key];
+    }
+  }
+}
+
+/**
+ * Returns true if the given `key` is an own property of `obj`.
+ */
+
+function hasOwn(obj, key) {
+  return Object.prototype.hasOwnProperty.call(obj, key);
+}
+
+/**
+ * Parse sections in `input` with the given `options`.
+ *
+ * ```js
+ * var sections = require('{%= name %}');
+ * var result = sections(input, options);
+ * // { content: 'Content before sections', sections: [] }
+ * ```
+ * @param {String|Buffer|Object} `input` If input is an object, it's `content` property must be a string or buffer.
+ * @param {Object} options
+ * @return {Object} Returns an object with a `content` string and an array of `sections` objects.
+ * @api public
+ */
+
+var sectionMatter = function(input, options) {
+  if (typeof options === 'function') {
+    options = { parse: options };
+  }
+
+  var file = toObject(input);
+  var defaults = {section_delimiter: '---', parse: identity};
+  var opts = extendShallow({}, defaults, options);
+  var delim = opts.section_delimiter;
+  var lines = file.content.split(/\r?\n/);
+  var sections = null;
+  var section = createSection();
+  var content = [];
+  var stack = [];
+
+  function initSections(val) {
+    file.content = val;
+    sections = [];
+    content = [];
+  }
+
+  function closeSection(val) {
+    if (stack.length) {
+      section.key = getKey(stack[0], delim);
+      section.content = val;
+      opts.parse(section, sections);
+      sections.push(section);
+      section = createSection();
+      content = [];
+      stack = [];
+    }
+  }
+
+  for (var i = 0; i < lines.length; i++) {
+    var line = lines[i];
+    var len = stack.length;
+    var ln = line.trim();
+
+    if (isDelimiter(ln, delim)) {
+      if (ln.length === 3 && i !== 0) {
+        if (len === 0 || len === 2) {
+          content.push(line);
+          continue;
+        }
+        stack.push(ln);
+        section.data = content.join('\n');
+        content = [];
+        continue;
+      }
+
+      if (sections === null) {
+        initSections(content.join('\n'));
+      }
+
+      if (len === 2) {
+        closeSection(content.join('\n'));
+      }
+
+      stack.push(ln);
+      continue;
+    }
+
+    content.push(line);
+  }
+
+  if (sections === null) {
+    initSections(content.join('\n'));
+  } else {
+    closeSection(content.join('\n'));
+  }
+
+  file.sections = sections;
+  return file;
+};
+
+function isDelimiter(line, delim) {
+  if (line.slice(0, delim.length) !== delim) {
+    return false;
+  }
+  if (line.charAt(delim.length + 1) === delim.slice(-1)) {
+    return false;
+  }
+  return true;
+}
+
+function toObject(input) {
+  if (kindOf(input) !== 'object') {
+    input = { content: input };
+  }
+
+  if (typeof input.content !== 'string' && !isBuffer$1(input.content)) {
+    throw new TypeError('expected a buffer or string');
+  }
+
+  input.content = input.content.toString();
+  input.sections = [];
+  return input;
+}
+
+function getKey(val, delim) {
+  return val ? val.slice(delim.length).trim() : '';
+}
+
+function createSection() {
+  return { key: '', data: '', content: '' };
+}
+
+function identity(val) {
+  return val;
+}
+
+function isBuffer$1(val) {
+  if (val && val.constructor && typeof val.constructor.isBuffer === 'function') {
+    return val.constructor.isBuffer(val);
+  }
+  return false;
+}
+
+function getAugmentedNamespace(n) {
+	if (n.__esModule) return n;
+	var a = Object.defineProperty({}, '__esModule', {value: true});
+	Object.keys(n).forEach(function (k) {
+		var d = Object.getOwnPropertyDescriptor(n, k);
+		Object.defineProperty(a, k, d.get ? d : {
+			enumerable: true,
+			get: function () {
+				return n[k];
+			}
+		});
+	});
+	return a;
+}
+
+function createCommonjsModule(fn) {
+  var module = { exports: {} };
+	return fn(module, module.exports), module.exports;
+}
+
+function commonjsRequire (target) {
+	throw new Error('Could not dynamically require "' + target + '". Please configure the dynamicRequireTargets option of @rollup/plugin-commonjs appropriately for this require call to behave properly.');
+}
+
+function isNothing(subject) {
+  return (typeof subject === 'undefined') || (subject === null);
+}
+
+
+function isObject(subject) {
+  return (typeof subject === 'object') && (subject !== null);
+}
+
+
+function toArray(sequence) {
+  if (Array.isArray(sequence)) return sequence;
+  else if (isNothing(sequence)) return [];
+
+  return [ sequence ];
+}
+
+
+function extend(target, source) {
+  var index, length, key, sourceKeys;
+
+  if (source) {
+    sourceKeys = Object.keys(source);
+
+    for (index = 0, length = sourceKeys.length; index < length; index += 1) {
+      key = sourceKeys[index];
+      target[key] = source[key];
+    }
+  }
+
+  return target;
+}
+
+
+function repeat(string, count) {
+  var result = '', cycle;
+
+  for (cycle = 0; cycle < count; cycle += 1) {
+    result += string;
+  }
+
+  return result;
+}
+
+
+function isNegativeZero(number) {
+  return (number === 0) && (Number.NEGATIVE_INFINITY === 1 / number);
+}
+
+
+var isNothing_1      = isNothing;
+var isObject_1       = isObject;
+var toArray_1        = toArray;
+var repeat_1         = repeat;
+var isNegativeZero_1 = isNegativeZero;
+var extend_1         = extend;
+
+var common = {
+	isNothing: isNothing_1,
+	isObject: isObject_1,
+	toArray: toArray_1,
+	repeat: repeat_1,
+	isNegativeZero: isNegativeZero_1,
+	extend: extend_1
+};
+
+// YAML error class. http://stackoverflow.com/questions/8458984
+
+function YAMLException(reason, mark) {
+  // Super constructor
+  Error.call(this);
+
+  this.name = 'YAMLException';
+  this.reason = reason;
+  this.mark = mark;
+  this.message = (this.reason || '(unknown reason)') + (this.mark ? ' ' + this.mark.toString() : '');
+
+  // Include stack trace in error object
+  if (Error.captureStackTrace) {
+    // Chrome and NodeJS
+    Error.captureStackTrace(this, this.constructor);
+  } else {
+    // FF, IE 10+ and Safari 6+. Fallback for others
+    this.stack = (new Error()).stack || '';
+  }
+}
+
+
+// Inherit from Error
+YAMLException.prototype = Object.create(Error.prototype);
+YAMLException.prototype.constructor = YAMLException;
+
+
+YAMLException.prototype.toString = function toString(compact) {
+  var result = this.name + ': ';
+
+  result += this.reason || '(unknown reason)';
+
+  if (!compact && this.mark) {
+    result += ' ' + this.mark.toString();
+  }
+
+  return result;
+};
+
+
+var exception = YAMLException;
+
+function Mark(name, buffer, position, line, column) {
+  this.name     = name;
+  this.buffer   = buffer;
+  this.position = position;
+  this.line     = line;
+  this.column   = column;
+}
+
+
+Mark.prototype.getSnippet = function getSnippet(indent, maxLength) {
+  var head, start, tail, end, snippet;
+
+  if (!this.buffer) return null;
+
+  indent = indent || 4;
+  maxLength = maxLength || 75;
+
+  head = '';
+  start = this.position;
+
+  while (start > 0 && '\x00\r\n\x85\u2028\u2029'.indexOf(this.buffer.charAt(start - 1)) === -1) {
+    start -= 1;
+    if (this.position - start > (maxLength / 2 - 1)) {
+      head = ' ... ';
+      start += 5;
+      break;
+    }
+  }
+
+  tail = '';
+  end = this.position;
+
+  while (end < this.buffer.length && '\x00\r\n\x85\u2028\u2029'.indexOf(this.buffer.charAt(end)) === -1) {
+    end += 1;
+    if (end - this.position > (maxLength / 2 - 1)) {
+      tail = ' ... ';
+      end -= 5;
+      break;
+    }
+  }
+
+  snippet = this.buffer.slice(start, end);
+
+  return common.repeat(' ', indent) + head + snippet + tail + '\n' +
+         common.repeat(' ', indent + this.position - start + head.length) + '^';
+};
+
+
+Mark.prototype.toString = function toString(compact) {
+  var snippet, where = '';
+
+  if (this.name) {
+    where += 'in "' + this.name + '" ';
+  }
+
+  where += 'at line ' + (this.line + 1) + ', column ' + (this.column + 1);
+
+  if (!compact) {
+    snippet = this.getSnippet();
+
+    if (snippet) {
+      where += ':\n' + snippet;
+    }
+  }
+
+  return where;
+};
+
+
+var mark = Mark;
+
+var TYPE_CONSTRUCTOR_OPTIONS = [
+  'kind',
+  'resolve',
+  'construct',
+  'instanceOf',
+  'predicate',
+  'represent',
+  'defaultStyle',
+  'styleAliases'
+];
+
+var YAML_NODE_KINDS = [
+  'scalar',
+  'sequence',
+  'mapping'
+];
+
+function compileStyleAliases(map) {
+  var result = {};
+
+  if (map !== null) {
+    Object.keys(map).forEach(function (style) {
+      map[style].forEach(function (alias) {
+        result[String(alias)] = style;
+      });
+    });
+  }
+
+  return result;
+}
+
+function Type(tag, options) {
+  options = options || {};
+
+  Object.keys(options).forEach(function (name) {
+    if (TYPE_CONSTRUCTOR_OPTIONS.indexOf(name) === -1) {
+      throw new exception('Unknown option "' + name + '" is met in definition of "' + tag + '" YAML type.');
+    }
+  });
+
+  // TODO: Add tag format check.
+  this.tag          = tag;
+  this.kind         = options['kind']         || null;
+  this.resolve      = options['resolve']      || function () { return true; };
+  this.construct    = options['construct']    || function (data) { return data; };
+  this.instanceOf   = options['instanceOf']   || null;
+  this.predicate    = options['predicate']    || null;
+  this.represent    = options['represent']    || null;
+  this.defaultStyle = options['defaultStyle'] || null;
+  this.styleAliases = compileStyleAliases(options['styleAliases'] || null);
+
+  if (YAML_NODE_KINDS.indexOf(this.kind) === -1) {
+    throw new exception('Unknown kind "' + this.kind + '" is specified for "' + tag + '" YAML type.');
+  }
+}
+
+var type = Type;
+
+/*eslint-disable max-len*/
+
+
+
+
+
+
+function compileList(schema, name, result) {
+  var exclude = [];
+
+  schema.include.forEach(function (includedSchema) {
+    result = compileList(includedSchema, name, result);
+  });
+
+  schema[name].forEach(function (currentType) {
+    result.forEach(function (previousType, previousIndex) {
+      if (previousType.tag === currentType.tag && previousType.kind === currentType.kind) {
+        exclude.push(previousIndex);
+      }
+    });
+
+    result.push(currentType);
+  });
+
+  return result.filter(function (type, index) {
+    return exclude.indexOf(index) === -1;
+  });
+}
+
+
+function compileMap(/* lists... */) {
+  var result = {
+        scalar: {},
+        sequence: {},
+        mapping: {},
+        fallback: {}
+      }, index, length;
+
+  function collectType(type) {
+    result[type.kind][type.tag] = result['fallback'][type.tag] = type;
+  }
+
+  for (index = 0, length = arguments.length; index < length; index += 1) {
+    arguments[index].forEach(collectType);
+  }
+  return result;
+}
+
+
+function Schema(definition) {
+  this.include  = definition.include  || [];
+  this.implicit = definition.implicit || [];
+  this.explicit = definition.explicit || [];
+
+  this.implicit.forEach(function (type) {
+    if (type.loadKind && type.loadKind !== 'scalar') {
+      throw new exception('There is a non-scalar type in the implicit list of a schema. Implicit resolving of such types is not supported.');
+    }
+  });
+
+  this.compiledImplicit = compileList(this, 'implicit', []);
+  this.compiledExplicit = compileList(this, 'explicit', []);
+  this.compiledTypeMap  = compileMap(this.compiledImplicit, this.compiledExplicit);
+}
+
+
+Schema.DEFAULT = null;
+
+
+Schema.create = function createSchema() {
+  var schemas, types;
+
+  switch (arguments.length) {
+    case 1:
+      schemas = Schema.DEFAULT;
+      types = arguments[0];
+      break;
+
+    case 2:
+      schemas = arguments[0];
+      types = arguments[1];
+      break;
+
+    default:
+      throw new exception('Wrong number of arguments for Schema.create function');
+  }
+
+  schemas = common.toArray(schemas);
+  types = common.toArray(types);
+
+  if (!schemas.every(function (schema) { return schema instanceof Schema; })) {
+    throw new exception('Specified list of super schemas (or a single Schema object) contains a non-Schema object.');
+  }
+
+  if (!types.every(function (type$1) { return type$1 instanceof type; })) {
+    throw new exception('Specified list of YAML types (or a single Type object) contains a non-Type object.');
+  }
+
+  return new Schema({
+    include: schemas,
+    explicit: types
+  });
+};
+
+
+var schema = Schema;
+
+var str = new type('tag:yaml.org,2002:str', {
+  kind: 'scalar',
+  construct: function (data) { return data !== null ? data : ''; }
+});
+
+var seq = new type('tag:yaml.org,2002:seq', {
+  kind: 'sequence',
+  construct: function (data) { return data !== null ? data : []; }
+});
+
+var map = new type('tag:yaml.org,2002:map', {
+  kind: 'mapping',
+  construct: function (data) { return data !== null ? data : {}; }
+});
+
+var failsafe = new schema({
+  explicit: [
+    str,
+    seq,
+    map
+  ]
+});
+
+function resolveYamlNull(data) {
+  if (data === null) return true;
+
+  var max = data.length;
+
+  return (max === 1 && data === '~') ||
+         (max === 4 && (data === 'null' || data === 'Null' || data === 'NULL'));
+}
+
+function constructYamlNull() {
+  return null;
+}
+
+function isNull(object) {
+  return object === null;
+}
+
+var _null = new type('tag:yaml.org,2002:null', {
+  kind: 'scalar',
+  resolve: resolveYamlNull,
+  construct: constructYamlNull,
+  predicate: isNull,
+  represent: {
+    canonical: function () { return '~';    },
+    lowercase: function () { return 'null'; },
+    uppercase: function () { return 'NULL'; },
+    camelcase: function () { return 'Null'; }
+  },
+  defaultStyle: 'lowercase'
+});
+
+function resolveYamlBoolean(data) {
+  if (data === null) return false;
+
+  var max = data.length;
+
+  return (max === 4 && (data === 'true' || data === 'True' || data === 'TRUE')) ||
+         (max === 5 && (data === 'false' || data === 'False' || data === 'FALSE'));
+}
+
+function constructYamlBoolean(data) {
+  return data === 'true' ||
+         data === 'True' ||
+         data === 'TRUE';
+}
+
+function isBoolean(object) {
+  return Object.prototype.toString.call(object) === '[object Boolean]';
+}
+
+var bool = new type('tag:yaml.org,2002:bool', {
+  kind: 'scalar',
+  resolve: resolveYamlBoolean,
+  construct: constructYamlBoolean,
+  predicate: isBoolean,
+  represent: {
+    lowercase: function (object) { return object ? 'true' : 'false'; },
+    uppercase: function (object) { return object ? 'TRUE' : 'FALSE'; },
+    camelcase: function (object) { return object ? 'True' : 'False'; }
+  },
+  defaultStyle: 'lowercase'
+});
+
+function isHexCode(c) {
+  return ((0x30/* 0 */ <= c) && (c <= 0x39/* 9 */)) ||
+         ((0x41/* A */ <= c) && (c <= 0x46/* F */)) ||
+         ((0x61/* a */ <= c) && (c <= 0x66/* f */));
+}
+
+function isOctCode(c) {
+  return ((0x30/* 0 */ <= c) && (c <= 0x37/* 7 */));
+}
+
+function isDecCode(c) {
+  return ((0x30/* 0 */ <= c) && (c <= 0x39/* 9 */));
+}
+
+function resolveYamlInteger(data) {
+  if (data === null) return false;
+
+  var max = data.length,
+      index = 0,
+      hasDigits = false,
+      ch;
+
+  if (!max) return false;
+
+  ch = data[index];
+
+  // sign
+  if (ch === '-' || ch === '+') {
+    ch = data[++index];
+  }
+
+  if (ch === '0') {
+    // 0
+    if (index + 1 === max) return true;
+    ch = data[++index];
+
+    // base 2, base 8, base 16
+
+    if (ch === 'b') {
+      // base 2
+      index++;
+
+      for (; index < max; index++) {
+        ch = data[index];
+        if (ch === '_') continue;
+        if (ch !== '0' && ch !== '1') return false;
+        hasDigits = true;
+      }
+      return hasDigits && ch !== '_';
+    }
+
+
+    if (ch === 'x') {
+      // base 16
+      index++;
+
+      for (; index < max; index++) {
+        ch = data[index];
+        if (ch === '_') continue;
+        if (!isHexCode(data.charCodeAt(index))) return false;
+        hasDigits = true;
+      }
+      return hasDigits && ch !== '_';
+    }
+
+    // base 8
+    for (; index < max; index++) {
+      ch = data[index];
+      if (ch === '_') continue;
+      if (!isOctCode(data.charCodeAt(index))) return false;
+      hasDigits = true;
+    }
+    return hasDigits && ch !== '_';
+  }
+
+  // base 10 (except 0) or base 60
+
+  // value should not start with `_`;
+  if (ch === '_') return false;
+
+  for (; index < max; index++) {
+    ch = data[index];
+    if (ch === '_') continue;
+    if (ch === ':') break;
+    if (!isDecCode(data.charCodeAt(index))) {
+      return false;
+    }
+    hasDigits = true;
+  }
+
+  // Should have digits and should not end with `_`
+  if (!hasDigits || ch === '_') return false;
+
+  // if !base60 - done;
+  if (ch !== ':') return true;
+
+  // base60 almost not used, no needs to optimize
+  return /^(:[0-5]?[0-9])+$/.test(data.slice(index));
+}
+
+function constructYamlInteger(data) {
+  var value = data, sign = 1, ch, base, digits = [];
+
+  if (value.indexOf('_') !== -1) {
+    value = value.replace(/_/g, '');
+  }
+
+  ch = value[0];
+
+  if (ch === '-' || ch === '+') {
+    if (ch === '-') sign = -1;
+    value = value.slice(1);
+    ch = value[0];
+  }
+
+  if (value === '0') return 0;
+
+  if (ch === '0') {
+    if (value[1] === 'b') return sign * parseInt(value.slice(2), 2);
+    if (value[1] === 'x') return sign * parseInt(value, 16);
+    return sign * parseInt(value, 8);
+  }
+
+  if (value.indexOf(':') !== -1) {
+    value.split(':').forEach(function (v) {
+      digits.unshift(parseInt(v, 10));
+    });
+
+    value = 0;
+    base = 1;
+
+    digits.forEach(function (d) {
+      value += (d * base);
+      base *= 60;
+    });
+
+    return sign * value;
+
+  }
+
+  return sign * parseInt(value, 10);
+}
+
+function isInteger(object) {
+  return (Object.prototype.toString.call(object)) === '[object Number]' &&
+         (object % 1 === 0 && !common.isNegativeZero(object));
+}
+
+var int = new type('tag:yaml.org,2002:int', {
+  kind: 'scalar',
+  resolve: resolveYamlInteger,
+  construct: constructYamlInteger,
+  predicate: isInteger,
+  represent: {
+    binary:      function (obj) { return obj >= 0 ? '0b' + obj.toString(2) : '-0b' + obj.toString(2).slice(1); },
+    octal:       function (obj) { return obj >= 0 ? '0'  + obj.toString(8) : '-0'  + obj.toString(8).slice(1); },
+    decimal:     function (obj) { return obj.toString(10); },
+    /* eslint-disable max-len */
+    hexadecimal: function (obj) { return obj >= 0 ? '0x' + obj.toString(16).toUpperCase() :  '-0x' + obj.toString(16).toUpperCase().slice(1); }
+  },
+  defaultStyle: 'decimal',
+  styleAliases: {
+    binary:      [ 2,  'bin' ],
+    octal:       [ 8,  'oct' ],
+    decimal:     [ 10, 'dec' ],
+    hexadecimal: [ 16, 'hex' ]
+  }
+});
+
+var YAML_FLOAT_PATTERN = new RegExp(
+  // 2.5e4, 2.5 and integers
+  '^(?:[-+]?(?:0|[1-9][0-9_]*)(?:\\.[0-9_]*)?(?:[eE][-+]?[0-9]+)?' +
+  // .2e4, .2
+  // special case, seems not from spec
+  '|\\.[0-9_]+(?:[eE][-+]?[0-9]+)?' +
+  // 20:59
+  '|[-+]?[0-9][0-9_]*(?::[0-5]?[0-9])+\\.[0-9_]*' +
+  // .inf
+  '|[-+]?\\.(?:inf|Inf|INF)' +
+  // .nan
+  '|\\.(?:nan|NaN|NAN))$');
+
+function resolveYamlFloat(data) {
+  if (data === null) return false;
+
+  if (!YAML_FLOAT_PATTERN.test(data) ||
+      // Quick hack to not allow integers end with `_`
+      // Probably should update regexp & check speed
+      data[data.length - 1] === '_') {
+    return false;
+  }
+
+  return true;
+}
+
+function constructYamlFloat(data) {
+  var value, sign, base, digits;
+
+  value  = data.replace(/_/g, '').toLowerCase();
+  sign   = value[0] === '-' ? -1 : 1;
+  digits = [];
+
+  if ('+-'.indexOf(value[0]) >= 0) {
+    value = value.slice(1);
+  }
+
+  if (value === '.inf') {
+    return (sign === 1) ? Number.POSITIVE_INFINITY : Number.NEGATIVE_INFINITY;
+
+  } else if (value === '.nan') {
+    return NaN;
+
+  } else if (value.indexOf(':') >= 0) {
+    value.split(':').forEach(function (v) {
+      digits.unshift(parseFloat(v, 10));
+    });
+
+    value = 0.0;
+    base = 1;
+
+    digits.forEach(function (d) {
+      value += d * base;
+      base *= 60;
+    });
+
+    return sign * value;
+
+  }
+  return sign * parseFloat(value, 10);
+}
+
+
+var SCIENTIFIC_WITHOUT_DOT = /^[-+]?[0-9]+e/;
+
+function representYamlFloat(object, style) {
+  var res;
+
+  if (isNaN(object)) {
+    switch (style) {
+      case 'lowercase': return '.nan';
+      case 'uppercase': return '.NAN';
+      case 'camelcase': return '.NaN';
+    }
+  } else if (Number.POSITIVE_INFINITY === object) {
+    switch (style) {
+      case 'lowercase': return '.inf';
+      case 'uppercase': return '.INF';
+      case 'camelcase': return '.Inf';
+    }
+  } else if (Number.NEGATIVE_INFINITY === object) {
+    switch (style) {
+      case 'lowercase': return '-.inf';
+      case 'uppercase': return '-.INF';
+      case 'camelcase': return '-.Inf';
+    }
+  } else if (common.isNegativeZero(object)) {
+    return '-0.0';
+  }
+
+  res = object.toString(10);
+
+  // JS stringifier can build scientific format without dots: 5e-100,
+  // while YAML requres dot: 5.e-100. Fix it with simple hack
+
+  return SCIENTIFIC_WITHOUT_DOT.test(res) ? res.replace('e', '.e') : res;
+}
+
+function isFloat(object) {
+  return (Object.prototype.toString.call(object) === '[object Number]') &&
+         (object % 1 !== 0 || common.isNegativeZero(object));
+}
+
+var float = new type('tag:yaml.org,2002:float', {
+  kind: 'scalar',
+  resolve: resolveYamlFloat,
+  construct: constructYamlFloat,
+  predicate: isFloat,
+  represent: representYamlFloat,
+  defaultStyle: 'lowercase'
+});
+
+var json = new schema({
+  include: [
+    failsafe
+  ],
+  implicit: [
+    _null,
+    bool,
+    int,
+    float
+  ]
+});
+
+var core = new schema({
+  include: [
+    json
+  ]
+});
+
+var YAML_DATE_REGEXP = new RegExp(
+  '^([0-9][0-9][0-9][0-9])'          + // [1] year
+  '-([0-9][0-9])'                    + // [2] month
+  '-([0-9][0-9])$');                   // [3] day
+
+var YAML_TIMESTAMP_REGEXP = new RegExp(
+  '^([0-9][0-9][0-9][0-9])'          + // [1] year
+  '-([0-9][0-9]?)'                   + // [2] month
+  '-([0-9][0-9]?)'                   + // [3] day
+  '(?:[Tt]|[ \\t]+)'                 + // ...
+  '([0-9][0-9]?)'                    + // [4] hour
+  ':([0-9][0-9])'                    + // [5] minute
+  ':([0-9][0-9])'                    + // [6] second
+  '(?:\\.([0-9]*))?'                 + // [7] fraction
+  '(?:[ \\t]*(Z|([-+])([0-9][0-9]?)' + // [8] tz [9] tz_sign [10] tz_hour
+  '(?::([0-9][0-9]))?))?$');           // [11] tz_minute
+
+function resolveYamlTimestamp(data) {
+  if (data === null) return false;
+  if (YAML_DATE_REGEXP.exec(data) !== null) return true;
+  if (YAML_TIMESTAMP_REGEXP.exec(data) !== null) return true;
+  return false;
+}
+
+function constructYamlTimestamp(data) {
+  var match, year, month, day, hour, minute, second, fraction = 0,
+      delta = null, tz_hour, tz_minute, date;
+
+  match = YAML_DATE_REGEXP.exec(data);
+  if (match === null) match = YAML_TIMESTAMP_REGEXP.exec(data);
+
+  if (match === null) throw new Error('Date resolve error');
+
+  // match: [1] year [2] month [3] day
+
+  year = +(match[1]);
+  month = +(match[2]) - 1; // JS month starts with 0
+  day = +(match[3]);
+
+  if (!match[4]) { // no hour
+    return new Date(Date.UTC(year, month, day));
+  }
+
+  // match: [4] hour [5] minute [6] second [7] fraction
+
+  hour = +(match[4]);
+  minute = +(match[5]);
+  second = +(match[6]);
+
+  if (match[7]) {
+    fraction = match[7].slice(0, 3);
+    while (fraction.length < 3) { // milli-seconds
+      fraction += '0';
+    }
+    fraction = +fraction;
+  }
+
+  // match: [8] tz [9] tz_sign [10] tz_hour [11] tz_minute
+
+  if (match[9]) {
+    tz_hour = +(match[10]);
+    tz_minute = +(match[11] || 0);
+    delta = (tz_hour * 60 + tz_minute) * 60000; // delta in mili-seconds
+    if (match[9] === '-') delta = -delta;
+  }
+
+  date = new Date(Date.UTC(year, month, day, hour, minute, second, fraction));
+
+  if (delta) date.setTime(date.getTime() - delta);
+
+  return date;
+}
+
+function representYamlTimestamp(object /*, style*/) {
+  return object.toISOString();
+}
+
+var timestamp = new type('tag:yaml.org,2002:timestamp', {
+  kind: 'scalar',
+  resolve: resolveYamlTimestamp,
+  construct: constructYamlTimestamp,
+  instanceOf: Date,
+  represent: representYamlTimestamp
+});
+
+function resolveYamlMerge(data) {
+  return data === '<<' || data === null;
+}
+
+var merge = new type('tag:yaml.org,2002:merge', {
+  kind: 'scalar',
+  resolve: resolveYamlMerge
+});
+
+/*eslint-disable no-bitwise*/
+
+var NodeBuffer;
+
+try {
+  // A trick for browserified version, to not include `Buffer` shim
+  var _require = commonjsRequire;
+  NodeBuffer = _require('buffer').Buffer;
+} catch (__) {}
+
+
+
+
+// [ 64, 65, 66 ] -> [ padding, CR, LF ]
+var BASE64_MAP = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=\n\r';
+
+
+function resolveYamlBinary(data) {
+  if (data === null) return false;
+
+  var code, idx, bitlen = 0, max = data.length, map = BASE64_MAP;
+
+  // Convert one by one.
+  for (idx = 0; idx < max; idx++) {
+    code = map.indexOf(data.charAt(idx));
+
+    // Skip CR/LF
+    if (code > 64) continue;
+
+    // Fail on illegal characters
+    if (code < 0) return false;
+
+    bitlen += 6;
+  }
+
+  // If there are any bits left, source was corrupted
+  return (bitlen % 8) === 0;
+}
+
+function constructYamlBinary(data) {
+  var idx, tailbits,
+      input = data.replace(/[\r\n=]/g, ''), // remove CR/LF & padding to simplify scan
+      max = input.length,
+      map = BASE64_MAP,
+      bits = 0,
+      result = [];
+
+  // Collect by 6*4 bits (3 bytes)
+
+  for (idx = 0; idx < max; idx++) {
+    if ((idx % 4 === 0) && idx) {
+      result.push((bits >> 16) & 0xFF);
+      result.push((bits >> 8) & 0xFF);
+      result.push(bits & 0xFF);
+    }
+
+    bits = (bits << 6) | map.indexOf(input.charAt(idx));
+  }
+
+  // Dump tail
+
+  tailbits = (max % 4) * 6;
+
+  if (tailbits === 0) {
+    result.push((bits >> 16) & 0xFF);
+    result.push((bits >> 8) & 0xFF);
+    result.push(bits & 0xFF);
+  } else if (tailbits === 18) {
+    result.push((bits >> 10) & 0xFF);
+    result.push((bits >> 2) & 0xFF);
+  } else if (tailbits === 12) {
+    result.push((bits >> 4) & 0xFF);
+  }
+
+  // Wrap into Buffer for NodeJS and leave Array for browser
+  if (NodeBuffer) {
+    // Support node 6.+ Buffer API when available
+    return NodeBuffer.from ? NodeBuffer.from(result) : new NodeBuffer(result);
+  }
+
+  return result;
+}
+
+function representYamlBinary(object /*, style*/) {
+  var result = '', bits = 0, idx, tail,
+      max = object.length,
+      map = BASE64_MAP;
+
+  // Convert every three bytes to 4 ASCII characters.
+
+  for (idx = 0; idx < max; idx++) {
+    if ((idx % 3 === 0) && idx) {
+      result += map[(bits >> 18) & 0x3F];
+      result += map[(bits >> 12) & 0x3F];
+      result += map[(bits >> 6) & 0x3F];
+      result += map[bits & 0x3F];
+    }
+
+    bits = (bits << 8) + object[idx];
+  }
+
+  // Dump tail
+
+  tail = max % 3;
+
+  if (tail === 0) {
+    result += map[(bits >> 18) & 0x3F];
+    result += map[(bits >> 12) & 0x3F];
+    result += map[(bits >> 6) & 0x3F];
+    result += map[bits & 0x3F];
+  } else if (tail === 2) {
+    result += map[(bits >> 10) & 0x3F];
+    result += map[(bits >> 4) & 0x3F];
+    result += map[(bits << 2) & 0x3F];
+    result += map[64];
+  } else if (tail === 1) {
+    result += map[(bits >> 2) & 0x3F];
+    result += map[(bits << 4) & 0x3F];
+    result += map[64];
+    result += map[64];
+  }
+
+  return result;
+}
+
+function isBinary(object) {
+  return NodeBuffer && NodeBuffer.isBuffer(object);
+}
+
+var binary = new type('tag:yaml.org,2002:binary', {
+  kind: 'scalar',
+  resolve: resolveYamlBinary,
+  construct: constructYamlBinary,
+  predicate: isBinary,
+  represent: representYamlBinary
+});
+
+var _hasOwnProperty = Object.prototype.hasOwnProperty;
+var _toString       = Object.prototype.toString;
+
+function resolveYamlOmap(data) {
+  if (data === null) return true;
+
+  var objectKeys = [], index, length, pair, pairKey, pairHasKey,
+      object = data;
+
+  for (index = 0, length = object.length; index < length; index += 1) {
+    pair = object[index];
+    pairHasKey = false;
+
+    if (_toString.call(pair) !== '[object Object]') return false;
+
+    for (pairKey in pair) {
+      if (_hasOwnProperty.call(pair, pairKey)) {
+        if (!pairHasKey) pairHasKey = true;
+        else return false;
+      }
+    }
+
+    if (!pairHasKey) return false;
+
+    if (objectKeys.indexOf(pairKey) === -1) objectKeys.push(pairKey);
+    else return false;
+  }
+
+  return true;
+}
+
+function constructYamlOmap(data) {
+  return data !== null ? data : [];
+}
+
+var omap = new type('tag:yaml.org,2002:omap', {
+  kind: 'sequence',
+  resolve: resolveYamlOmap,
+  construct: constructYamlOmap
+});
+
+var _toString$1 = Object.prototype.toString;
+
+function resolveYamlPairs(data) {
+  if (data === null) return true;
+
+  var index, length, pair, keys, result,
+      object = data;
+
+  result = new Array(object.length);
+
+  for (index = 0, length = object.length; index < length; index += 1) {
+    pair = object[index];
+
+    if (_toString$1.call(pair) !== '[object Object]') return false;
+
+    keys = Object.keys(pair);
+
+    if (keys.length !== 1) return false;
+
+    result[index] = [ keys[0], pair[keys[0]] ];
+  }
+
+  return true;
+}
+
+function constructYamlPairs(data) {
+  if (data === null) return [];
+
+  var index, length, pair, keys, result,
+      object = data;
+
+  result = new Array(object.length);
+
+  for (index = 0, length = object.length; index < length; index += 1) {
+    pair = object[index];
+
+    keys = Object.keys(pair);
+
+    result[index] = [ keys[0], pair[keys[0]] ];
+  }
+
+  return result;
+}
+
+var pairs = new type('tag:yaml.org,2002:pairs', {
+  kind: 'sequence',
+  resolve: resolveYamlPairs,
+  construct: constructYamlPairs
+});
+
+var _hasOwnProperty$1 = Object.prototype.hasOwnProperty;
+
+function resolveYamlSet(data) {
+  if (data === null) return true;
+
+  var key, object = data;
+
+  for (key in object) {
+    if (_hasOwnProperty$1.call(object, key)) {
+      if (object[key] !== null) return false;
+    }
+  }
+
+  return true;
+}
+
+function constructYamlSet(data) {
+  return data !== null ? data : {};
+}
+
+var set = new type('tag:yaml.org,2002:set', {
+  kind: 'mapping',
+  resolve: resolveYamlSet,
+  construct: constructYamlSet
+});
+
+var default_safe = new schema({
+  include: [
+    core
+  ],
+  implicit: [
+    timestamp,
+    merge
+  ],
+  explicit: [
+    binary,
+    omap,
+    pairs,
+    set
+  ]
+});
+
+function resolveJavascriptUndefined() {
+  return true;
+}
+
+function constructJavascriptUndefined() {
+  /*eslint-disable no-undefined*/
+  return undefined;
+}
+
+function representJavascriptUndefined() {
+  return '';
+}
+
+function isUndefined(object) {
+  return typeof object === 'undefined';
+}
+
+var _undefined = new type('tag:yaml.org,2002:js/undefined', {
+  kind: 'scalar',
+  resolve: resolveJavascriptUndefined,
+  construct: constructJavascriptUndefined,
+  predicate: isUndefined,
+  represent: representJavascriptUndefined
+});
+
+function resolveJavascriptRegExp(data) {
+  if (data === null) return false;
+  if (data.length === 0) return false;
+
+  var regexp = data,
+      tail   = /\/([gim]*)$/.exec(data),
+      modifiers = '';
+
+  // if regexp starts with '/' it can have modifiers and must be properly closed
+  // `/foo/gim` - modifiers tail can be maximum 3 chars
+  if (regexp[0] === '/') {
+    if (tail) modifiers = tail[1];
+
+    if (modifiers.length > 3) return false;
+    // if expression starts with /, is should be properly terminated
+    if (regexp[regexp.length - modifiers.length - 1] !== '/') return false;
+  }
+
+  return true;
+}
+
+function constructJavascriptRegExp(data) {
+  var regexp = data,
+      tail   = /\/([gim]*)$/.exec(data),
+      modifiers = '';
+
+  // `/foo/gim` - tail can be maximum 4 chars
+  if (regexp[0] === '/') {
+    if (tail) modifiers = tail[1];
+    regexp = regexp.slice(1, regexp.length - modifiers.length - 1);
+  }
+
+  return new RegExp(regexp, modifiers);
+}
+
+function representJavascriptRegExp(object /*, style*/) {
+  var result = '/' + object.source + '/';
+
+  if (object.global) result += 'g';
+  if (object.multiline) result += 'm';
+  if (object.ignoreCase) result += 'i';
+
+  return result;
+}
+
+function isRegExp(object) {
+  return Object.prototype.toString.call(object) === '[object RegExp]';
+}
+
+var regexp = new type('tag:yaml.org,2002:js/regexp', {
+  kind: 'scalar',
+  resolve: resolveJavascriptRegExp,
+  construct: constructJavascriptRegExp,
+  predicate: isRegExp,
+  represent: representJavascriptRegExp
+});
+
+var esprima;
+
+// Browserified version does not have esprima
+//
+// 1. For node.js just require module as deps
+// 2. For browser try to require mudule via external AMD system.
+//    If not found - try to fallback to window.esprima. If not
+//    found too - then fail to parse.
+//
+try {
+  // workaround to exclude package from browserify list.
+  var _require$1 = commonjsRequire;
+  esprima = _require$1('esprima');
+} catch (_) {
+  /* eslint-disable no-redeclare */
+  /* global window */
+  if (typeof window !== 'undefined') esprima = window.esprima;
+}
+
+
+
+function resolveJavascriptFunction(data) {
+  if (data === null) return false;
+
+  try {
+    var source = '(' + data + ')',
+        ast    = esprima.parse(source, { range: true });
+
+    if (ast.type                    !== 'Program'             ||
+        ast.body.length             !== 1                     ||
+        ast.body[0].type            !== 'ExpressionStatement' ||
+        (ast.body[0].expression.type !== 'ArrowFunctionExpression' &&
+          ast.body[0].expression.type !== 'FunctionExpression')) {
+      return false;
+    }
+
+    return true;
+  } catch (err) {
+    return false;
+  }
+}
+
+function constructJavascriptFunction(data) {
+  /*jslint evil:true*/
+
+  var source = '(' + data + ')',
+      ast    = esprima.parse(source, { range: true }),
+      params = [],
+      body;
+
+  if (ast.type                    !== 'Program'             ||
+      ast.body.length             !== 1                     ||
+      ast.body[0].type            !== 'ExpressionStatement' ||
+      (ast.body[0].expression.type !== 'ArrowFunctionExpression' &&
+        ast.body[0].expression.type !== 'FunctionExpression')) {
+    throw new Error('Failed to resolve function');
+  }
+
+  ast.body[0].expression.params.forEach(function (param) {
+    params.push(param.name);
+  });
+
+  body = ast.body[0].expression.body.range;
+
+  // Esprima's ranges include the first '{' and the last '}' characters on
+  // function expressions. So cut them out.
+  if (ast.body[0].expression.body.type === 'BlockStatement') {
+    /*eslint-disable no-new-func*/
+    return new Function(params, source.slice(body[0] + 1, body[1] - 1));
+  }
+  // ES6 arrow functions can omit the BlockStatement. In that case, just return
+  // the body.
+  /*eslint-disable no-new-func*/
+  return new Function(params, 'return ' + source.slice(body[0], body[1]));
+}
+
+function representJavascriptFunction(object /*, style*/) {
+  return object.toString();
+}
+
+function isFunction(object) {
+  return Object.prototype.toString.call(object) === '[object Function]';
+}
+
+var _function = new type('tag:yaml.org,2002:js/function', {
+  kind: 'scalar',
+  resolve: resolveJavascriptFunction,
+  construct: constructJavascriptFunction,
+  predicate: isFunction,
+  represent: representJavascriptFunction
+});
+
+var default_full = schema.DEFAULT = new schema({
+  include: [
+    default_safe
+  ],
+  explicit: [
+    _undefined,
+    regexp,
+    _function
+  ]
+});
+
+/*eslint-disable max-len,no-use-before-define*/
+
+
+
+
+
+
+
+
+var _hasOwnProperty$2 = Object.prototype.hasOwnProperty;
+
+
+var CONTEXT_FLOW_IN   = 1;
+var CONTEXT_FLOW_OUT  = 2;
+var CONTEXT_BLOCK_IN  = 3;
+var CONTEXT_BLOCK_OUT = 4;
+
+
+var CHOMPING_CLIP  = 1;
+var CHOMPING_STRIP = 2;
+var CHOMPING_KEEP  = 3;
+
+
+var PATTERN_NON_PRINTABLE         = /[\x00-\x08\x0B\x0C\x0E-\x1F\x7F-\x84\x86-\x9F\uFFFE\uFFFF]|[\uD800-\uDBFF](?![\uDC00-\uDFFF])|(?:[^\uD800-\uDBFF]|^)[\uDC00-\uDFFF]/;
+var PATTERN_NON_ASCII_LINE_BREAKS = /[\x85\u2028\u2029]/;
+var PATTERN_FLOW_INDICATORS       = /[,\[\]\{\}]/;
+var PATTERN_TAG_HANDLE            = /^(?:!|!!|![a-z\-]+!)$/i;
+var PATTERN_TAG_URI               = /^(?:!|[^,\[\]\{\}])(?:%[0-9a-f]{2}|[0-9a-z\-#;\/\?:@&=\+\$,_\.!~\*'\(\)\[\]])*$/i;
+
+
+function _class(obj) { return Object.prototype.toString.call(obj); }
+
+function is_EOL(c) {
+  return (c === 0x0A/* LF */) || (c === 0x0D/* CR */);
+}
+
+function is_WHITE_SPACE(c) {
+  return (c === 0x09/* Tab */) || (c === 0x20/* Space */);
+}
+
+function is_WS_OR_EOL(c) {
+  return (c === 0x09/* Tab */) ||
+         (c === 0x20/* Space */) ||
+         (c === 0x0A/* LF */) ||
+         (c === 0x0D/* CR */);
+}
+
+function is_FLOW_INDICATOR(c) {
+  return c === 0x2C/* , */ ||
+         c === 0x5B/* [ */ ||
+         c === 0x5D/* ] */ ||
+         c === 0x7B/* { */ ||
+         c === 0x7D/* } */;
+}
+
+function fromHexCode(c) {
+  var lc;
+
+  if ((0x30/* 0 */ <= c) && (c <= 0x39/* 9 */)) {
+    return c - 0x30;
+  }
+
+  /*eslint-disable no-bitwise*/
+  lc = c | 0x20;
+
+  if ((0x61/* a */ <= lc) && (lc <= 0x66/* f */)) {
+    return lc - 0x61 + 10;
+  }
+
+  return -1;
+}
+
+function escapedHexLen(c) {
+  if (c === 0x78/* x */) { return 2; }
+  if (c === 0x75/* u */) { return 4; }
+  if (c === 0x55/* U */) { return 8; }
+  return 0;
+}
+
+function fromDecimalCode(c) {
+  if ((0x30/* 0 */ <= c) && (c <= 0x39/* 9 */)) {
+    return c - 0x30;
+  }
+
+  return -1;
+}
+
+function simpleEscapeSequence(c) {
+  /* eslint-disable indent */
+  return (c === 0x30/* 0 */) ? '\x00' :
+        (c === 0x61/* a */) ? '\x07' :
+        (c === 0x62/* b */) ? '\x08' :
+        (c === 0x74/* t */) ? '\x09' :
+        (c === 0x09/* Tab */) ? '\x09' :
+        (c === 0x6E/* n */) ? '\x0A' :
+        (c === 0x76/* v */) ? '\x0B' :
+        (c === 0x66/* f */) ? '\x0C' :
+        (c === 0x72/* r */) ? '\x0D' :
+        (c === 0x65/* e */) ? '\x1B' :
+        (c === 0x20/* Space */) ? ' ' :
+        (c === 0x22/* " */) ? '\x22' :
+        (c === 0x2F/* / */) ? '/' :
+        (c === 0x5C/* \ */) ? '\x5C' :
+        (c === 0x4E/* N */) ? '\x85' :
+        (c === 0x5F/* _ */) ? '\xA0' :
+        (c === 0x4C/* L */) ? '\u2028' :
+        (c === 0x50/* P */) ? '\u2029' : '';
+}
+
+function charFromCodepoint(c) {
+  if (c <= 0xFFFF) {
+    return String.fromCharCode(c);
+  }
+  // Encode UTF-16 surrogate pair
+  // https://en.wikipedia.org/wiki/UTF-16#Code_points_U.2B010000_to_U.2B10FFFF
+  return String.fromCharCode(
+    ((c - 0x010000) >> 10) + 0xD800,
+    ((c - 0x010000) & 0x03FF) + 0xDC00
+  );
+}
+
+var simpleEscapeCheck = new Array(256); // integer, for fast access
+var simpleEscapeMap = new Array(256);
+for (var i = 0; i < 256; i++) {
+  simpleEscapeCheck[i] = simpleEscapeSequence(i) ? 1 : 0;
+  simpleEscapeMap[i] = simpleEscapeSequence(i);
+}
+
+
+function State(input, options) {
+  this.input = input;
+
+  this.filename  = options['filename']  || null;
+  this.schema    = options['schema']    || default_full;
+  this.onWarning = options['onWarning'] || null;
+  this.legacy    = options['legacy']    || false;
+  this.json      = options['json']      || false;
+  this.listener  = options['listener']  || null;
+
+  this.implicitTypes = this.schema.compiledImplicit;
+  this.typeMap       = this.schema.compiledTypeMap;
+
+  this.length     = input.length;
+  this.position   = 0;
+  this.line       = 0;
+  this.lineStart  = 0;
+  this.lineIndent = 0;
+
+  this.documents = [];
+
+  /*
+  this.version;
+  this.checkLineBreaks;
+  this.tagMap;
+  this.anchorMap;
+  this.tag;
+  this.anchor;
+  this.kind;
+  this.result;*/
+
+}
+
+
+function generateError(state, message) {
+  return new exception(
+    message,
+    new mark(state.filename, state.input, state.position, state.line, (state.position - state.lineStart)));
+}
+
+function throwError(state, message) {
+  throw generateError(state, message);
+}
+
+function throwWarning(state, message) {
+  if (state.onWarning) {
+    state.onWarning.call(null, generateError(state, message));
+  }
+}
+
+
+var directiveHandlers = {
+
+  YAML: function handleYamlDirective(state, name, args) {
+
+    var match, major, minor;
+
+    if (state.version !== null) {
+      throwError(state, 'duplication of %YAML directive');
+    }
+
+    if (args.length !== 1) {
+      throwError(state, 'YAML directive accepts exactly one argument');
+    }
+
+    match = /^([0-9]+)\.([0-9]+)$/.exec(args[0]);
+
+    if (match === null) {
+      throwError(state, 'ill-formed argument of the YAML directive');
+    }
+
+    major = parseInt(match[1], 10);
+    minor = parseInt(match[2], 10);
+
+    if (major !== 1) {
+      throwError(state, 'unacceptable YAML version of the document');
+    }
+
+    state.version = args[0];
+    state.checkLineBreaks = (minor < 2);
+
+    if (minor !== 1 && minor !== 2) {
+      throwWarning(state, 'unsupported YAML version of the document');
+    }
+  },
+
+  TAG: function handleTagDirective(state, name, args) {
+
+    var handle, prefix;
+
+    if (args.length !== 2) {
+      throwError(state, 'TAG directive accepts exactly two arguments');
+    }
+
+    handle = args[0];
+    prefix = args[1];
+
+    if (!PATTERN_TAG_HANDLE.test(handle)) {
+      throwError(state, 'ill-formed tag handle (first argument) of the TAG directive');
+    }
+
+    if (_hasOwnProperty$2.call(state.tagMap, handle)) {
+      throwError(state, 'there is a previously declared suffix for "' + handle + '" tag handle');
+    }
+
+    if (!PATTERN_TAG_URI.test(prefix)) {
+      throwError(state, 'ill-formed tag prefix (second argument) of the TAG directive');
+    }
+
+    state.tagMap[handle] = prefix;
+  }
+};
+
+
+function captureSegment(state, start, end, checkJson) {
+  var _position, _length, _character, _result;
+
+  if (start < end) {
+    _result = state.input.slice(start, end);
+
+    if (checkJson) {
+      for (_position = 0, _length = _result.length; _position < _length; _position += 1) {
+        _character = _result.charCodeAt(_position);
+        if (!(_character === 0x09 ||
+              (0x20 <= _character && _character <= 0x10FFFF))) {
+          throwError(state, 'expected valid JSON character');
+        }
+      }
+    } else if (PATTERN_NON_PRINTABLE.test(_result)) {
+      throwError(state, 'the stream contains non-printable characters');
+    }
+
+    state.result += _result;
+  }
+}
+
+function mergeMappings(state, destination, source, overridableKeys) {
+  var sourceKeys, key, index, quantity;
+
+  if (!common.isObject(source)) {
+    throwError(state, 'cannot merge mappings; the provided source object is unacceptable');
+  }
+
+  sourceKeys = Object.keys(source);
+
+  for (index = 0, quantity = sourceKeys.length; index < quantity; index += 1) {
+    key = sourceKeys[index];
+
+    if (!_hasOwnProperty$2.call(destination, key)) {
+      destination[key] = source[key];
+      overridableKeys[key] = true;
+    }
+  }
+}
+
+function storeMappingPair(state, _result, overridableKeys, keyTag, keyNode, valueNode, startLine, startPos) {
+  var index, quantity;
+
+  // The output is a plain object here, so keys can only be strings.
+  // We need to convert keyNode to a string, but doing so can hang the process
+  // (deeply nested arrays that explode exponentially using aliases).
+  if (Array.isArray(keyNode)) {
+    keyNode = Array.prototype.slice.call(keyNode);
+
+    for (index = 0, quantity = keyNode.length; index < quantity; index += 1) {
+      if (Array.isArray(keyNode[index])) {
+        throwError(state, 'nested arrays are not supported inside keys');
+      }
+
+      if (typeof keyNode === 'object' && _class(keyNode[index]) === '[object Object]') {
+        keyNode[index] = '[object Object]';
+      }
+    }
+  }
+
+  // Avoid code execution in load() via toString property
+  // (still use its own toString for arrays, timestamps,
+  // and whatever user schema extensions happen to have @@toStringTag)
+  if (typeof keyNode === 'object' && _class(keyNode) === '[object Object]') {
+    keyNode = '[object Object]';
+  }
+
+
+  keyNode = String(keyNode);
+
+  if (_result === null) {
+    _result = {};
+  }
+
+  if (keyTag === 'tag:yaml.org,2002:merge') {
+    if (Array.isArray(valueNode)) {
+      for (index = 0, quantity = valueNode.length; index < quantity; index += 1) {
+        mergeMappings(state, _result, valueNode[index], overridableKeys);
+      }
+    } else {
+      mergeMappings(state, _result, valueNode, overridableKeys);
+    }
+  } else {
+    if (!state.json &&
+        !_hasOwnProperty$2.call(overridableKeys, keyNode) &&
+        _hasOwnProperty$2.call(_result, keyNode)) {
+      state.line = startLine || state.line;
+      state.position = startPos || state.position;
+      throwError(state, 'duplicated mapping key');
+    }
+    _result[keyNode] = valueNode;
+    delete overridableKeys[keyNode];
+  }
+
+  return _result;
+}
+
+function readLineBreak(state) {
+  var ch;
+
+  ch = state.input.charCodeAt(state.position);
+
+  if (ch === 0x0A/* LF */) {
+    state.position++;
+  } else if (ch === 0x0D/* CR */) {
+    state.position++;
+    if (state.input.charCodeAt(state.position) === 0x0A/* LF */) {
+      state.position++;
+    }
+  } else {
+    throwError(state, 'a line break is expected');
+  }
+
+  state.line += 1;
+  state.lineStart = state.position;
+}
+
+function skipSeparationSpace(state, allowComments, checkIndent) {
+  var lineBreaks = 0,
+      ch = state.input.charCodeAt(state.position);
+
+  while (ch !== 0) {
+    while (is_WHITE_SPACE(ch)) {
+      ch = state.input.charCodeAt(++state.position);
+    }
+
+    if (allowComments && ch === 0x23/* # */) {
+      do {
+        ch = state.input.charCodeAt(++state.position);
+      } while (ch !== 0x0A/* LF */ && ch !== 0x0D/* CR */ && ch !== 0);
+    }
+
+    if (is_EOL(ch)) {
+      readLineBreak(state);
+
+      ch = state.input.charCodeAt(state.position);
+      lineBreaks++;
+      state.lineIndent = 0;
+
+      while (ch === 0x20/* Space */) {
+        state.lineIndent++;
+        ch = state.input.charCodeAt(++state.position);
+      }
+    } else {
+      break;
+    }
+  }
+
+  if (checkIndent !== -1 && lineBreaks !== 0 && state.lineIndent < checkIndent) {
+    throwWarning(state, 'deficient indentation');
+  }
+
+  return lineBreaks;
+}
+
+function testDocumentSeparator(state) {
+  var _position = state.position,
+      ch;
+
+  ch = state.input.charCodeAt(_position);
+
+  // Condition state.position === state.lineStart is tested
+  // in parent on each call, for efficiency. No needs to test here again.
+  if ((ch === 0x2D/* - */ || ch === 0x2E/* . */) &&
+      ch === state.input.charCodeAt(_position + 1) &&
+      ch === state.input.charCodeAt(_position + 2)) {
+
+    _position += 3;
+
+    ch = state.input.charCodeAt(_position);
+
+    if (ch === 0 || is_WS_OR_EOL(ch)) {
+      return true;
+    }
+  }
+
+  return false;
+}
+
+function writeFoldedLines(state, count) {
+  if (count === 1) {
+    state.result += ' ';
+  } else if (count > 1) {
+    state.result += common.repeat('\n', count - 1);
+  }
+}
+
+
+function readPlainScalar(state, nodeIndent, withinFlowCollection) {
+  var preceding,
+      following,
+      captureStart,
+      captureEnd,
+      hasPendingContent,
+      _line,
+      _lineStart,
+      _lineIndent,
+      _kind = state.kind,
+      _result = state.result,
+      ch;
+
+  ch = state.input.charCodeAt(state.position);
+
+  if (is_WS_OR_EOL(ch)      ||
+      is_FLOW_INDICATOR(ch) ||
+      ch === 0x23/* # */    ||
+      ch === 0x26/* & */    ||
+      ch === 0x2A/* * */    ||
+      ch === 0x21/* ! */    ||
+      ch === 0x7C/* | */    ||
+      ch === 0x3E/* > */    ||
+      ch === 0x27/* ' */    ||
+      ch === 0x22/* " */    ||
+      ch === 0x25/* % */    ||
+      ch === 0x40/* @ */    ||
+      ch === 0x60/* ` */) {
+    return false;
+  }
+
+  if (ch === 0x3F/* ? */ || ch === 0x2D/* - */) {
+    following = state.input.charCodeAt(state.position + 1);
+
+    if (is_WS_OR_EOL(following) ||
+        withinFlowCollection && is_FLOW_INDICATOR(following)) {
+      return false;
+    }
+  }
+
+  state.kind = 'scalar';
+  state.result = '';
+  captureStart = captureEnd = state.position;
+  hasPendingContent = false;
+
+  while (ch !== 0) {
+    if (ch === 0x3A/* : */) {
+      following = state.input.charCodeAt(state.position + 1);
+
+      if (is_WS_OR_EOL(following) ||
+          withinFlowCollection && is_FLOW_INDICATOR(following)) {
+        break;
+      }
+
+    } else if (ch === 0x23/* # */) {
+      preceding = state.input.charCodeAt(state.position - 1);
+
+      if (is_WS_OR_EOL(preceding)) {
+        break;
+      }
+
+    } else if ((state.position === state.lineStart && testDocumentSeparator(state)) ||
+               withinFlowCollection && is_FLOW_INDICATOR(ch)) {
+      break;
+
+    } else if (is_EOL(ch)) {
+      _line = state.line;
+      _lineStart = state.lineStart;
+      _lineIndent = state.lineIndent;
+      skipSeparationSpace(state, false, -1);
+
+      if (state.lineIndent >= nodeIndent) {
+        hasPendingContent = true;
+        ch = state.input.charCodeAt(state.position);
+        continue;
+      } else {
+        state.position = captureEnd;
+        state.line = _line;
+        state.lineStart = _lineStart;
+        state.lineIndent = _lineIndent;
+        break;
+      }
+    }
+
+    if (hasPendingContent) {
+      captureSegment(state, captureStart, captureEnd, false);
+      writeFoldedLines(state, state.line - _line);
+      captureStart = captureEnd = state.position;
+      hasPendingContent = false;
+    }
+
+    if (!is_WHITE_SPACE(ch)) {
+      captureEnd = state.position + 1;
+    }
+
+    ch = state.input.charCodeAt(++state.position);
+  }
+
+  captureSegment(state, captureStart, captureEnd, false);
+
+  if (state.result) {
+    return true;
+  }
+
+  state.kind = _kind;
+  state.result = _result;
+  return false;
+}
+
+function readSingleQuotedScalar(state, nodeIndent) {
+  var ch,
+      captureStart, captureEnd;
+
+  ch = state.input.charCodeAt(state.position);
+
+  if (ch !== 0x27/* ' */) {
+    return false;
+  }
+
+  state.kind = 'scalar';
+  state.result = '';
+  state.position++;
+  captureStart = captureEnd = state.position;
+
+  while ((ch = state.input.charCodeAt(state.position)) !== 0) {
+    if (ch === 0x27/* ' */) {
+      captureSegment(state, captureStart, state.position, true);
+      ch = state.input.charCodeAt(++state.position);
+
+      if (ch === 0x27/* ' */) {
+        captureStart = state.position;
+        state.position++;
+        captureEnd = state.position;
+      } else {
+        return true;
+      }
+
+    } else if (is_EOL(ch)) {
+      captureSegment(state, captureStart, captureEnd, true);
+      writeFoldedLines(state, skipSeparationSpace(state, false, nodeIndent));
+      captureStart = captureEnd = state.position;
+
+    } else if (state.position === state.lineStart && testDocumentSeparator(state)) {
+      throwError(state, 'unexpected end of the document within a single quoted scalar');
+
+    } else {
+      state.position++;
+      captureEnd = state.position;
+    }
+  }
+
+  throwError(state, 'unexpected end of the stream within a single quoted scalar');
+}
+
+function readDoubleQuotedScalar(state, nodeIndent) {
+  var captureStart,
+      captureEnd,
+      hexLength,
+      hexResult,
+      tmp,
+      ch;
+
+  ch = state.input.charCodeAt(state.position);
+
+  if (ch !== 0x22/* " */) {
+    return false;
+  }
+
+  state.kind = 'scalar';
+  state.result = '';
+  state.position++;
+  captureStart = captureEnd = state.position;
+
+  while ((ch = state.input.charCodeAt(state.position)) !== 0) {
+    if (ch === 0x22/* " */) {
+      captureSegment(state, captureStart, state.position, true);
+      state.position++;
+      return true;
+
+    } else if (ch === 0x5C/* \ */) {
+      captureSegment(state, captureStart, state.position, true);
+      ch = state.input.charCodeAt(++state.position);
+
+      if (is_EOL(ch)) {
+        skipSeparationSpace(state, false, nodeIndent);
+
+        // TODO: rework to inline fn with no type cast?
+      } else if (ch < 256 && simpleEscapeCheck[ch]) {
+        state.result += simpleEscapeMap[ch];
+        state.position++;
+
+      } else if ((tmp = escapedHexLen(ch)) > 0) {
+        hexLength = tmp;
+        hexResult = 0;
+
+        for (; hexLength > 0; hexLength--) {
+          ch = state.input.charCodeAt(++state.position);
+
+          if ((tmp = fromHexCode(ch)) >= 0) {
+            hexResult = (hexResult << 4) + tmp;
+
+          } else {
+            throwError(state, 'expected hexadecimal character');
+          }
+        }
+
+        state.result += charFromCodepoint(hexResult);
+
+        state.position++;
+
+      } else {
+        throwError(state, 'unknown escape sequence');
+      }
+
+      captureStart = captureEnd = state.position;
+
+    } else if (is_EOL(ch)) {
+      captureSegment(state, captureStart, captureEnd, true);
+      writeFoldedLines(state, skipSeparationSpace(state, false, nodeIndent));
+      captureStart = captureEnd = state.position;
+
+    } else if (state.position === state.lineStart && testDocumentSeparator(state)) {
+      throwError(state, 'unexpected end of the document within a double quoted scalar');
+
+    } else {
+      state.position++;
+      captureEnd = state.position;
+    }
+  }
+
+  throwError(state, 'unexpected end of the stream within a double quoted scalar');
+}
+
+function readFlowCollection(state, nodeIndent) {
+  var readNext = true,
+      _line,
+      _tag     = state.tag,
+      _result,
+      _anchor  = state.anchor,
+      following,
+      terminator,
+      isPair,
+      isExplicitPair,
+      isMapping,
+      overridableKeys = {},
+      keyNode,
+      keyTag,
+      valueNode,
+      ch;
+
+  ch = state.input.charCodeAt(state.position);
+
+  if (ch === 0x5B/* [ */) {
+    terminator = 0x5D;/* ] */
+    isMapping = false;
+    _result = [];
+  } else if (ch === 0x7B/* { */) {
+    terminator = 0x7D;/* } */
+    isMapping = true;
+    _result = {};
+  } else {
+    return false;
+  }
+
+  if (state.anchor !== null) {
+    state.anchorMap[state.anchor] = _result;
+  }
+
+  ch = state.input.charCodeAt(++state.position);
+
+  while (ch !== 0) {
+    skipSeparationSpace(state, true, nodeIndent);
+
+    ch = state.input.charCodeAt(state.position);
+
+    if (ch === terminator) {
+      state.position++;
+      state.tag = _tag;
+      state.anchor = _anchor;
+      state.kind = isMapping ? 'mapping' : 'sequence';
+      state.result = _result;
+      return true;
+    } else if (!readNext) {
+      throwError(state, 'missed comma between flow collection entries');
+    }
+
+    keyTag = keyNode = valueNode = null;
+    isPair = isExplicitPair = false;
+
+    if (ch === 0x3F/* ? */) {
+      following = state.input.charCodeAt(state.position + 1);
+
+      if (is_WS_OR_EOL(following)) {
+        isPair = isExplicitPair = true;
+        state.position++;
+        skipSeparationSpace(state, true, nodeIndent);
+      }
+    }
+
+    _line = state.line;
+    composeNode(state, nodeIndent, CONTEXT_FLOW_IN, false, true);
+    keyTag = state.tag;
+    keyNode = state.result;
+    skipSeparationSpace(state, true, nodeIndent);
+
+    ch = state.input.charCodeAt(state.position);
+
+    if ((isExplicitPair || state.line === _line) && ch === 0x3A/* : */) {
+      isPair = true;
+      ch = state.input.charCodeAt(++state.position);
+      skipSeparationSpace(state, true, nodeIndent);
+      composeNode(state, nodeIndent, CONTEXT_FLOW_IN, false, true);
+      valueNode = state.result;
+    }
+
+    if (isMapping) {
+      storeMappingPair(state, _result, overridableKeys, keyTag, keyNode, valueNode);
+    } else if (isPair) {
+      _result.push(storeMappingPair(state, null, overridableKeys, keyTag, keyNode, valueNode));
+    } else {
+      _result.push(keyNode);
+    }
+
+    skipSeparationSpace(state, true, nodeIndent);
+
+    ch = state.input.charCodeAt(state.position);
+
+    if (ch === 0x2C/* , */) {
+      readNext = true;
+      ch = state.input.charCodeAt(++state.position);
+    } else {
+      readNext = false;
+    }
+  }
+
+  throwError(state, 'unexpected end of the stream within a flow collection');
+}
+
+function readBlockScalar(state, nodeIndent) {
+  var captureStart,
+      folding,
+      chomping       = CHOMPING_CLIP,
+      didReadContent = false,
+      detectedIndent = false,
+      textIndent     = nodeIndent,
+      emptyLines     = 0,
+      atMoreIndented = false,
+      tmp,
+      ch;
+
+  ch = state.input.charCodeAt(state.position);
+
+  if (ch === 0x7C/* | */) {
+    folding = false;
+  } else if (ch === 0x3E/* > */) {
+    folding = true;
+  } else {
+    return false;
+  }
+
+  state.kind = 'scalar';
+  state.result = '';
+
+  while (ch !== 0) {
+    ch = state.input.charCodeAt(++state.position);
+
+    if (ch === 0x2B/* + */ || ch === 0x2D/* - */) {
+      if (CHOMPING_CLIP === chomping) {
+        chomping = (ch === 0x2B/* + */) ? CHOMPING_KEEP : CHOMPING_STRIP;
+      } else {
+        throwError(state, 'repeat of a chomping mode identifier');
+      }
+
+    } else if ((tmp = fromDecimalCode(ch)) >= 0) {
+      if (tmp === 0) {
+        throwError(state, 'bad explicit indentation width of a block scalar; it cannot be less than one');
+      } else if (!detectedIndent) {
+        textIndent = nodeIndent + tmp - 1;
+        detectedIndent = true;
+      } else {
+        throwError(state, 'repeat of an indentation width identifier');
+      }
+
+    } else {
+      break;
+    }
+  }
+
+  if (is_WHITE_SPACE(ch)) {
+    do { ch = state.input.charCodeAt(++state.position); }
+    while (is_WHITE_SPACE(ch));
+
+    if (ch === 0x23/* # */) {
+      do { ch = state.input.charCodeAt(++state.position); }
+      while (!is_EOL(ch) && (ch !== 0));
+    }
+  }
+
+  while (ch !== 0) {
+    readLineBreak(state);
+    state.lineIndent = 0;
+
+    ch = state.input.charCodeAt(state.position);
+
+    while ((!detectedIndent || state.lineIndent < textIndent) &&
+           (ch === 0x20/* Space */)) {
+      state.lineIndent++;
+      ch = state.input.charCodeAt(++state.position);
+    }
+
+    if (!detectedIndent && state.lineIndent > textIndent) {
+      textIndent = state.lineIndent;
+    }
+
+    if (is_EOL(ch)) {
+      emptyLines++;
+      continue;
+    }
+
+    // End of the scalar.
+    if (state.lineIndent < textIndent) {
+
+      // Perform the chomping.
+      if (chomping === CHOMPING_KEEP) {
+        state.result += common.repeat('\n', didReadContent ? 1 + emptyLines : emptyLines);
+      } else if (chomping === CHOMPING_CLIP) {
+        if (didReadContent) { // i.e. only if the scalar is not empty.
+          state.result += '\n';
+        }
+      }
+
+      // Break this `while` cycle and go to the funciton's epilogue.
+      break;
+    }
+
+    // Folded style: use fancy rules to handle line breaks.
+    if (folding) {
+
+      // Lines starting with white space characters (more-indented lines) are not folded.
+      if (is_WHITE_SPACE(ch)) {
+        atMoreIndented = true;
+        // except for the first content line (cf. Example 8.1)
+        state.result += common.repeat('\n', didReadContent ? 1 + emptyLines : emptyLines);
+
+      // End of more-indented block.
+      } else if (atMoreIndented) {
+        atMoreIndented = false;
+        state.result += common.repeat('\n', emptyLines + 1);
+
+      // Just one line break - perceive as the same line.
+      } else if (emptyLines === 0) {
+        if (didReadContent) { // i.e. only if we have already read some scalar content.
+          state.result += ' ';
+        }
+
+      // Several line breaks - perceive as different lines.
+      } else {
+        state.result += common.repeat('\n', emptyLines);
+      }
+
+    // Literal style: just add exact number of line breaks between content lines.
+    } else {
+      // Keep all line breaks except the header line break.
+      state.result += common.repeat('\n', didReadContent ? 1 + emptyLines : emptyLines);
+    }
+
+    didReadContent = true;
+    detectedIndent = true;
+    emptyLines = 0;
+    captureStart = state.position;
+
+    while (!is_EOL(ch) && (ch !== 0)) {
+      ch = state.input.charCodeAt(++state.position);
+    }
+
+    captureSegment(state, captureStart, state.position, false);
+  }
+
+  return true;
+}
+
+function readBlockSequence(state, nodeIndent) {
+  var _line,
+      _tag      = state.tag,
+      _anchor   = state.anchor,
+      _result   = [],
+      following,
+      detected  = false,
+      ch;
+
+  if (state.anchor !== null) {
+    state.anchorMap[state.anchor] = _result;
+  }
+
+  ch = state.input.charCodeAt(state.position);
+
+  while (ch !== 0) {
+
+    if (ch !== 0x2D/* - */) {
+      break;
+    }
+
+    following = state.input.charCodeAt(state.position + 1);
+
+    if (!is_WS_OR_EOL(following)) {
+      break;
+    }
+
+    detected = true;
+    state.position++;
+
+    if (skipSeparationSpace(state, true, -1)) {
+      if (state.lineIndent <= nodeIndent) {
+        _result.push(null);
+        ch = state.input.charCodeAt(state.position);
+        continue;
+      }
+    }
+
+    _line = state.line;
+    composeNode(state, nodeIndent, CONTEXT_BLOCK_IN, false, true);
+    _result.push(state.result);
+    skipSeparationSpace(state, true, -1);
+
+    ch = state.input.charCodeAt(state.position);
+
+    if ((state.line === _line || state.lineIndent > nodeIndent) && (ch !== 0)) {
+      throwError(state, 'bad indentation of a sequence entry');
+    } else if (state.lineIndent < nodeIndent) {
+      break;
+    }
+  }
+
+  if (detected) {
+    state.tag = _tag;
+    state.anchor = _anchor;
+    state.kind = 'sequence';
+    state.result = _result;
+    return true;
+  }
+  return false;
+}
+
+function readBlockMapping(state, nodeIndent, flowIndent) {
+  var following,
+      allowCompact,
+      _line,
+      _pos,
+      _tag          = state.tag,
+      _anchor       = state.anchor,
+      _result       = {},
+      overridableKeys = {},
+      keyTag        = null,
+      keyNode       = null,
+      valueNode     = null,
+      atExplicitKey = false,
+      detected      = false,
+      ch;
+
+  if (state.anchor !== null) {
+    state.anchorMap[state.anchor] = _result;
+  }
+
+  ch = state.input.charCodeAt(state.position);
+
+  while (ch !== 0) {
+    following = state.input.charCodeAt(state.position + 1);
+    _line = state.line; // Save the current line.
+    _pos = state.position;
+
+    //
+    // Explicit notation case. There are two separate blocks:
+    // first for the key (denoted by "?") and second for the value (denoted by ":")
+    //
+    if ((ch === 0x3F/* ? */ || ch === 0x3A/* : */) && is_WS_OR_EOL(following)) {
+
+      if (ch === 0x3F/* ? */) {
+        if (atExplicitKey) {
+          storeMappingPair(state, _result, overridableKeys, keyTag, keyNode, null);
+          keyTag = keyNode = valueNode = null;
+        }
+
+        detected = true;
+        atExplicitKey = true;
+        allowCompact = true;
+
+      } else if (atExplicitKey) {
+        // i.e. 0x3A/* : */ === character after the explicit key.
+        atExplicitKey = false;
+        allowCompact = true;
+
+      } else {
+        throwError(state, 'incomplete explicit mapping pair; a key node is missed; or followed by a non-tabulated empty line');
+      }
+
+      state.position += 1;
+      ch = following;
+
+    //
+    // Implicit notation case. Flow-style node as the key first, then ":", and the value.
+    //
+    } else if (composeNode(state, flowIndent, CONTEXT_FLOW_OUT, false, true)) {
+
+      if (state.line === _line) {
+        ch = state.input.charCodeAt(state.position);
+
+        while (is_WHITE_SPACE(ch)) {
+          ch = state.input.charCodeAt(++state.position);
+        }
+
+        if (ch === 0x3A/* : */) {
+          ch = state.input.charCodeAt(++state.position);
+
+          if (!is_WS_OR_EOL(ch)) {
+            throwError(state, 'a whitespace character is expected after the key-value separator within a block mapping');
+          }
+
+          if (atExplicitKey) {
+            storeMappingPair(state, _result, overridableKeys, keyTag, keyNode, null);
+            keyTag = keyNode = valueNode = null;
+          }
+
+          detected = true;
+          atExplicitKey = false;
+          allowCompact = false;
+          keyTag = state.tag;
+          keyNode = state.result;
+
+        } else if (detected) {
+          throwError(state, 'can not read an implicit mapping pair; a colon is missed');
+
+        } else {
+          state.tag = _tag;
+          state.anchor = _anchor;
+          return true; // Keep the result of `composeNode`.
+        }
+
+      } else if (detected) {
+        throwError(state, 'can not read a block mapping entry; a multiline key may not be an implicit key');
+
+      } else {
+        state.tag = _tag;
+        state.anchor = _anchor;
+        return true; // Keep the result of `composeNode`.
+      }
+
+    } else {
+      break; // Reading is done. Go to the epilogue.
+    }
+
+    //
+    // Common reading code for both explicit and implicit notations.
+    //
+    if (state.line === _line || state.lineIndent > nodeIndent) {
+      if (composeNode(state, nodeIndent, CONTEXT_BLOCK_OUT, true, allowCompact)) {
+        if (atExplicitKey) {
+          keyNode = state.result;
+        } else {
+          valueNode = state.result;
+        }
+      }
+
+      if (!atExplicitKey) {
+        storeMappingPair(state, _result, overridableKeys, keyTag, keyNode, valueNode, _line, _pos);
+        keyTag = keyNode = valueNode = null;
+      }
+
+      skipSeparationSpace(state, true, -1);
+      ch = state.input.charCodeAt(state.position);
+    }
+
+    if (state.lineIndent > nodeIndent && (ch !== 0)) {
+      throwError(state, 'bad indentation of a mapping entry');
+    } else if (state.lineIndent < nodeIndent) {
+      break;
+    }
+  }
+
+  //
+  // Epilogue.
+  //
+
+  // Special case: last mapping's node contains only the key in explicit notation.
+  if (atExplicitKey) {
+    storeMappingPair(state, _result, overridableKeys, keyTag, keyNode, null);
+  }
+
+  // Expose the resulting mapping.
+  if (detected) {
+    state.tag = _tag;
+    state.anchor = _anchor;
+    state.kind = 'mapping';
+    state.result = _result;
+  }
+
+  return detected;
+}
+
+function readTagProperty(state) {
+  var _position,
+      isVerbatim = false,
+      isNamed    = false,
+      tagHandle,
+      tagName,
+      ch;
+
+  ch = state.input.charCodeAt(state.position);
+
+  if (ch !== 0x21/* ! */) return false;
+
+  if (state.tag !== null) {
+    throwError(state, 'duplication of a tag property');
+  }
+
+  ch = state.input.charCodeAt(++state.position);
+
+  if (ch === 0x3C/* < */) {
+    isVerbatim = true;
+    ch = state.input.charCodeAt(++state.position);
+
+  } else if (ch === 0x21/* ! */) {
+    isNamed = true;
+    tagHandle = '!!';
+    ch = state.input.charCodeAt(++state.position);
+
+  } else {
+    tagHandle = '!';
+  }
+
+  _position = state.position;
+
+  if (isVerbatim) {
+    do { ch = state.input.charCodeAt(++state.position); }
+    while (ch !== 0 && ch !== 0x3E/* > */);
+
+    if (state.position < state.length) {
+      tagName = state.input.slice(_position, state.position);
+      ch = state.input.charCodeAt(++state.position);
+    } else {
+      throwError(state, 'unexpected end of the stream within a verbatim tag');
+    }
+  } else {
+    while (ch !== 0 && !is_WS_OR_EOL(ch)) {
+
+      if (ch === 0x21/* ! */) {
+        if (!isNamed) {
+          tagHandle = state.input.slice(_position - 1, state.position + 1);
+
+          if (!PATTERN_TAG_HANDLE.test(tagHandle)) {
+            throwError(state, 'named tag handle cannot contain such characters');
+          }
+
+          isNamed = true;
+          _position = state.position + 1;
+        } else {
+          throwError(state, 'tag suffix cannot contain exclamation marks');
+        }
+      }
+
+      ch = state.input.charCodeAt(++state.position);
+    }
+
+    tagName = state.input.slice(_position, state.position);
+
+    if (PATTERN_FLOW_INDICATORS.test(tagName)) {
+      throwError(state, 'tag suffix cannot contain flow indicator characters');
+    }
+  }
+
+  if (tagName && !PATTERN_TAG_URI.test(tagName)) {
+    throwError(state, 'tag name cannot contain such characters: ' + tagName);
+  }
+
+  if (isVerbatim) {
+    state.tag = tagName;
+
+  } else if (_hasOwnProperty$2.call(state.tagMap, tagHandle)) {
+    state.tag = state.tagMap[tagHandle] + tagName;
+
+  } else if (tagHandle === '!') {
+    state.tag = '!' + tagName;
+
+  } else if (tagHandle === '!!') {
+    state.tag = 'tag:yaml.org,2002:' + tagName;
+
+  } else {
+    throwError(state, 'undeclared tag handle "' + tagHandle + '"');
+  }
+
+  return true;
+}
+
+function readAnchorProperty(state) {
+  var _position,
+      ch;
+
+  ch = state.input.charCodeAt(state.position);
+
+  if (ch !== 0x26/* & */) return false;
+
+  if (state.anchor !== null) {
+    throwError(state, 'duplication of an anchor property');
+  }
+
+  ch = state.input.charCodeAt(++state.position);
+  _position = state.position;
+
+  while (ch !== 0 && !is_WS_OR_EOL(ch) && !is_FLOW_INDICATOR(ch)) {
+    ch = state.input.charCodeAt(++state.position);
+  }
+
+  if (state.position === _position) {
+    throwError(state, 'name of an anchor node must contain at least one character');
+  }
+
+  state.anchor = state.input.slice(_position, state.position);
+  return true;
+}
+
+function readAlias(state) {
+  var _position, alias,
+      ch;
+
+  ch = state.input.charCodeAt(state.position);
+
+  if (ch !== 0x2A/* * */) return false;
+
+  ch = state.input.charCodeAt(++state.position);
+  _position = state.position;
+
+  while (ch !== 0 && !is_WS_OR_EOL(ch) && !is_FLOW_INDICATOR(ch)) {
+    ch = state.input.charCodeAt(++state.position);
+  }
+
+  if (state.position === _position) {
+    throwError(state, 'name of an alias node must contain at least one character');
+  }
+
+  alias = state.input.slice(_position, state.position);
+
+  if (!_hasOwnProperty$2.call(state.anchorMap, alias)) {
+    throwError(state, 'unidentified alias "' + alias + '"');
+  }
+
+  state.result = state.anchorMap[alias];
+  skipSeparationSpace(state, true, -1);
+  return true;
+}
+
+function composeNode(state, parentIndent, nodeContext, allowToSeek, allowCompact) {
+  var allowBlockStyles,
+      allowBlockScalars,
+      allowBlockCollections,
+      indentStatus = 1, // 1: this>parent, 0: this=parent, -1: this<parent
+      atNewLine  = false,
+      hasContent = false,
+      typeIndex,
+      typeQuantity,
+      type,
+      flowIndent,
+      blockIndent;
+
+  if (state.listener !== null) {
+    state.listener('open', state);
+  }
+
+  state.tag    = null;
+  state.anchor = null;
+  state.kind   = null;
+  state.result = null;
+
+  allowBlockStyles = allowBlockScalars = allowBlockCollections =
+    CONTEXT_BLOCK_OUT === nodeContext ||
+    CONTEXT_BLOCK_IN  === nodeContext;
+
+  if (allowToSeek) {
+    if (skipSeparationSpace(state, true, -1)) {
+      atNewLine = true;
+
+      if (state.lineIndent > parentIndent) {
+        indentStatus = 1;
+      } else if (state.lineIndent === parentIndent) {
+        indentStatus = 0;
+      } else if (state.lineIndent < parentIndent) {
+        indentStatus = -1;
+      }
+    }
+  }
+
+  if (indentStatus === 1) {
+    while (readTagProperty(state) || readAnchorProperty(state)) {
+      if (skipSeparationSpace(state, true, -1)) {
+        atNewLine = true;
+        allowBlockCollections = allowBlockStyles;
+
+        if (state.lineIndent > parentIndent) {
+          indentStatus = 1;
+        } else if (state.lineIndent === parentIndent) {
+          indentStatus = 0;
+        } else if (state.lineIndent < parentIndent) {
+          indentStatus = -1;
+        }
+      } else {
+        allowBlockCollections = false;
+      }
+    }
+  }
+
+  if (allowBlockCollections) {
+    allowBlockCollections = atNewLine || allowCompact;
+  }
+
+  if (indentStatus === 1 || CONTEXT_BLOCK_OUT === nodeContext) {
+    if (CONTEXT_FLOW_IN === nodeContext || CONTEXT_FLOW_OUT === nodeContext) {
+      flowIndent = parentIndent;
+    } else {
+      flowIndent = parentIndent + 1;
+    }
+
+    blockIndent = state.position - state.lineStart;
+
+    if (indentStatus === 1) {
+      if (allowBlockCollections &&
+          (readBlockSequence(state, blockIndent) ||
+           readBlockMapping(state, blockIndent, flowIndent)) ||
+          readFlowCollection(state, flowIndent)) {
+        hasContent = true;
+      } else {
+        if ((allowBlockScalars && readBlockScalar(state, flowIndent)) ||
+            readSingleQuotedScalar(state, flowIndent) ||
+            readDoubleQuotedScalar(state, flowIndent)) {
+          hasContent = true;
+
+        } else if (readAlias(state)) {
+          hasContent = true;
+
+          if (state.tag !== null || state.anchor !== null) {
+            throwError(state, 'alias node should not have any properties');
+          }
+
+        } else if (readPlainScalar(state, flowIndent, CONTEXT_FLOW_IN === nodeContext)) {
+          hasContent = true;
+
+          if (state.tag === null) {
+            state.tag = '?';
+          }
+        }
+
+        if (state.anchor !== null) {
+          state.anchorMap[state.anchor] = state.result;
+        }
+      }
+    } else if (indentStatus === 0) {
+      // Special case: block sequences are allowed to have same indentation level as the parent.
+      // http://www.yaml.org/spec/1.2/spec.html#id2799784
+      hasContent = allowBlockCollections && readBlockSequence(state, blockIndent);
+    }
+  }
+
+  if (state.tag !== null && state.tag !== '!') {
+    if (state.tag === '?') {
+      // Implicit resolving is not allowed for non-scalar types, and '?'
+      // non-specific tag is only automatically assigned to plain scalars.
+      //
+      // We only need to check kind conformity in case user explicitly assigns '?'
+      // tag, for example like this: "!<?> [0]"
+      //
+      if (state.result !== null && state.kind !== 'scalar') {
+        throwError(state, 'unacceptable node kind for !<?> tag; it should be "scalar", not "' + state.kind + '"');
+      }
+
+      for (typeIndex = 0, typeQuantity = state.implicitTypes.length; typeIndex < typeQuantity; typeIndex += 1) {
+        type = state.implicitTypes[typeIndex];
+
+        if (type.resolve(state.result)) { // `state.result` updated in resolver if matched
+          state.result = type.construct(state.result);
+          state.tag = type.tag;
+          if (state.anchor !== null) {
+            state.anchorMap[state.anchor] = state.result;
+          }
+          break;
+        }
+      }
+    } else if (_hasOwnProperty$2.call(state.typeMap[state.kind || 'fallback'], state.tag)) {
+      type = state.typeMap[state.kind || 'fallback'][state.tag];
+
+      if (state.result !== null && type.kind !== state.kind) {
+        throwError(state, 'unacceptable node kind for !<' + state.tag + '> tag; it should be "' + type.kind + '", not "' + state.kind + '"');
+      }
+
+      if (!type.resolve(state.result)) { // `state.result` updated in resolver if matched
+        throwError(state, 'cannot resolve a node with !<' + state.tag + '> explicit tag');
+      } else {
+        state.result = type.construct(state.result);
+        if (state.anchor !== null) {
+          state.anchorMap[state.anchor] = state.result;
+        }
+      }
+    } else {
+      throwError(state, 'unknown tag !<' + state.tag + '>');
+    }
+  }
+
+  if (state.listener !== null) {
+    state.listener('close', state);
+  }
+  return state.tag !== null ||  state.anchor !== null || hasContent;
+}
+
+function readDocument(state) {
+  var documentStart = state.position,
+      _position,
+      directiveName,
+      directiveArgs,
+      hasDirectives = false,
+      ch;
+
+  state.version = null;
+  state.checkLineBreaks = state.legacy;
+  state.tagMap = {};
+  state.anchorMap = {};
+
+  while ((ch = state.input.charCodeAt(state.position)) !== 0) {
+    skipSeparationSpace(state, true, -1);
+
+    ch = state.input.charCodeAt(state.position);
+
+    if (state.lineIndent > 0 || ch !== 0x25/* % */) {
+      break;
+    }
+
+    hasDirectives = true;
+    ch = state.input.charCodeAt(++state.position);
+    _position = state.position;
+
+    while (ch !== 0 && !is_WS_OR_EOL(ch)) {
+      ch = state.input.charCodeAt(++state.position);
+    }
+
+    directiveName = state.input.slice(_position, state.position);
+    directiveArgs = [];
+
+    if (directiveName.length < 1) {
+      throwError(state, 'directive name must not be less than one character in length');
+    }
+
+    while (ch !== 0) {
+      while (is_WHITE_SPACE(ch)) {
+        ch = state.input.charCodeAt(++state.position);
+      }
+
+      if (ch === 0x23/* # */) {
+        do { ch = state.input.charCodeAt(++state.position); }
+        while (ch !== 0 && !is_EOL(ch));
+        break;
+      }
+
+      if (is_EOL(ch)) break;
+
+      _position = state.position;
+
+      while (ch !== 0 && !is_WS_OR_EOL(ch)) {
+        ch = state.input.charCodeAt(++state.position);
+      }
+
+      directiveArgs.push(state.input.slice(_position, state.position));
+    }
+
+    if (ch !== 0) readLineBreak(state);
+
+    if (_hasOwnProperty$2.call(directiveHandlers, directiveName)) {
+      directiveHandlers[directiveName](state, directiveName, directiveArgs);
+    } else {
+      throwWarning(state, 'unknown document directive "' + directiveName + '"');
+    }
+  }
+
+  skipSeparationSpace(state, true, -1);
+
+  if (state.lineIndent === 0 &&
+      state.input.charCodeAt(state.position)     === 0x2D/* - */ &&
+      state.input.charCodeAt(state.position + 1) === 0x2D/* - */ &&
+      state.input.charCodeAt(state.position + 2) === 0x2D/* - */) {
+    state.position += 3;
+    skipSeparationSpace(state, true, -1);
+
+  } else if (hasDirectives) {
+    throwError(state, 'directives end mark is expected');
+  }
+
+  composeNode(state, state.lineIndent - 1, CONTEXT_BLOCK_OUT, false, true);
+  skipSeparationSpace(state, true, -1);
+
+  if (state.checkLineBreaks &&
+      PATTERN_NON_ASCII_LINE_BREAKS.test(state.input.slice(documentStart, state.position))) {
+    throwWarning(state, 'non-ASCII line breaks are interpreted as content');
+  }
+
+  state.documents.push(state.result);
+
+  if (state.position === state.lineStart && testDocumentSeparator(state)) {
+
+    if (state.input.charCodeAt(state.position) === 0x2E/* . */) {
+      state.position += 3;
+      skipSeparationSpace(state, true, -1);
+    }
+    return;
+  }
+
+  if (state.position < (state.length - 1)) {
+    throwError(state, 'end of the stream or a document separator is expected');
+  } else {
+    return;
+  }
+}
+
+
+function loadDocuments(input, options) {
+  input = String(input);
+  options = options || {};
+
+  if (input.length !== 0) {
+
+    // Add tailing `\n` if not exists
+    if (input.charCodeAt(input.length - 1) !== 0x0A/* LF */ &&
+        input.charCodeAt(input.length - 1) !== 0x0D/* CR */) {
+      input += '\n';
+    }
+
+    // Strip BOM
+    if (input.charCodeAt(0) === 0xFEFF) {
+      input = input.slice(1);
+    }
+  }
+
+  var state = new State(input, options);
+
+  var nullpos = input.indexOf('\0');
+
+  if (nullpos !== -1) {
+    state.position = nullpos;
+    throwError(state, 'null byte is not allowed in input');
+  }
+
+  // Use 0 as string terminator. That significantly simplifies bounds check.
+  state.input += '\0';
+
+  while (state.input.charCodeAt(state.position) === 0x20/* Space */) {
+    state.lineIndent += 1;
+    state.position += 1;
+  }
+
+  while (state.position < (state.length - 1)) {
+    readDocument(state);
+  }
+
+  return state.documents;
+}
+
+
+function loadAll(input, iterator, options) {
+  if (iterator !== null && typeof iterator === 'object' && typeof options === 'undefined') {
+    options = iterator;
+    iterator = null;
+  }
+
+  var documents = loadDocuments(input, options);
+
+  if (typeof iterator !== 'function') {
+    return documents;
+  }
+
+  for (var index = 0, length = documents.length; index < length; index += 1) {
+    iterator(documents[index]);
+  }
+}
+
+
+function load(input, options) {
+  var documents = loadDocuments(input, options);
+
+  if (documents.length === 0) {
+    /*eslint-disable no-undefined*/
+    return undefined;
+  } else if (documents.length === 1) {
+    return documents[0];
+  }
+  throw new exception('expected a single document in the stream, but found more');
+}
+
+
+function safeLoadAll(input, iterator, options) {
+  if (typeof iterator === 'object' && iterator !== null && typeof options === 'undefined') {
+    options = iterator;
+    iterator = null;
+  }
+
+  return loadAll(input, iterator, common.extend({ schema: default_safe }, options));
+}
+
+
+function safeLoad(input, options) {
+  return load(input, common.extend({ schema: default_safe }, options));
+}
+
+
+var loadAll_1     = loadAll;
+var load_1        = load;
+var safeLoadAll_1 = safeLoadAll;
+var safeLoad_1    = safeLoad;
+
+var loader = {
+	loadAll: loadAll_1,
+	load: load_1,
+	safeLoadAll: safeLoadAll_1,
+	safeLoad: safeLoad_1
+};
+
+/*eslint-disable no-use-before-define*/
+
+
+
+
+
+
+var _toString$2       = Object.prototype.toString;
+var _hasOwnProperty$3 = Object.prototype.hasOwnProperty;
+
+var CHAR_TAB                  = 0x09; /* Tab */
+var CHAR_LINE_FEED            = 0x0A; /* LF */
+var CHAR_CARRIAGE_RETURN      = 0x0D; /* CR */
+var CHAR_SPACE                = 0x20; /* Space */
+var CHAR_EXCLAMATION          = 0x21; /* ! */
+var CHAR_DOUBLE_QUOTE         = 0x22; /* " */
+var CHAR_SHARP                = 0x23; /* # */
+var CHAR_PERCENT              = 0x25; /* % */
+var CHAR_AMPERSAND            = 0x26; /* & */
+var CHAR_SINGLE_QUOTE         = 0x27; /* ' */
+var CHAR_ASTERISK             = 0x2A; /* * */
+var CHAR_COMMA                = 0x2C; /* , */
+var CHAR_MINUS                = 0x2D; /* - */
+var CHAR_COLON                = 0x3A; /* : */
+var CHAR_EQUALS               = 0x3D; /* = */
+var CHAR_GREATER_THAN         = 0x3E; /* > */
+var CHAR_QUESTION             = 0x3F; /* ? */
+var CHAR_COMMERCIAL_AT        = 0x40; /* @ */
+var CHAR_LEFT_SQUARE_BRACKET  = 0x5B; /* [ */
+var CHAR_RIGHT_SQUARE_BRACKET = 0x5D; /* ] */
+var CHAR_GRAVE_ACCENT         = 0x60; /* ` */
+var CHAR_LEFT_CURLY_BRACKET   = 0x7B; /* { */
+var CHAR_VERTICAL_LINE        = 0x7C; /* | */
+var CHAR_RIGHT_CURLY_BRACKET  = 0x7D; /* } */
+
+var ESCAPE_SEQUENCES = {};
+
+ESCAPE_SEQUENCES[0x00]   = '\\0';
+ESCAPE_SEQUENCES[0x07]   = '\\a';
+ESCAPE_SEQUENCES[0x08]   = '\\b';
+ESCAPE_SEQUENCES[0x09]   = '\\t';
+ESCAPE_SEQUENCES[0x0A]   = '\\n';
+ESCAPE_SEQUENCES[0x0B]   = '\\v';
+ESCAPE_SEQUENCES[0x0C]   = '\\f';
+ESCAPE_SEQUENCES[0x0D]   = '\\r';
+ESCAPE_SEQUENCES[0x1B]   = '\\e';
+ESCAPE_SEQUENCES[0x22]   = '\\"';
+ESCAPE_SEQUENCES[0x5C]   = '\\\\';
+ESCAPE_SEQUENCES[0x85]   = '\\N';
+ESCAPE_SEQUENCES[0xA0]   = '\\_';
+ESCAPE_SEQUENCES[0x2028] = '\\L';
+ESCAPE_SEQUENCES[0x2029] = '\\P';
+
+var DEPRECATED_BOOLEANS_SYNTAX = [
+  'y', 'Y', 'yes', 'Yes', 'YES', 'on', 'On', 'ON',
+  'n', 'N', 'no', 'No', 'NO', 'off', 'Off', 'OFF'
+];
+
+function compileStyleMap(schema, map) {
+  var result, keys, index, length, tag, style, type;
+
+  if (map === null) return {};
+
+  result = {};
+  keys = Object.keys(map);
+
+  for (index = 0, length = keys.length; index < length; index += 1) {
+    tag = keys[index];
+    style = String(map[tag]);
+
+    if (tag.slice(0, 2) === '!!') {
+      tag = 'tag:yaml.org,2002:' + tag.slice(2);
+    }
+    type = schema.compiledTypeMap['fallback'][tag];
+
+    if (type && _hasOwnProperty$3.call(type.styleAliases, style)) {
+      style = type.styleAliases[style];
+    }
+
+    result[tag] = style;
+  }
+
+  return result;
+}
+
+function encodeHex(character) {
+  var string, handle, length;
+
+  string = character.toString(16).toUpperCase();
+
+  if (character <= 0xFF) {
+    handle = 'x';
+    length = 2;
+  } else if (character <= 0xFFFF) {
+    handle = 'u';
+    length = 4;
+  } else if (character <= 0xFFFFFFFF) {
+    handle = 'U';
+    length = 8;
+  } else {
+    throw new exception('code point within a string may not be greater than 0xFFFFFFFF');
+  }
+
+  return '\\' + handle + common.repeat('0', length - string.length) + string;
+}
+
+function State$1(options) {
+  this.schema        = options['schema'] || default_full;
+  this.indent        = Math.max(1, (options['indent'] || 2));
+  this.noArrayIndent = options['noArrayIndent'] || false;
+  this.skipInvalid   = options['skipInvalid'] || false;
+  this.flowLevel     = (common.isNothing(options['flowLevel']) ? -1 : options['flowLevel']);
+  this.styleMap      = compileStyleMap(this.schema, options['styles'] || null);
+  this.sortKeys      = options['sortKeys'] || false;
+  this.lineWidth     = options['lineWidth'] || 80;
+  this.noRefs        = options['noRefs'] || false;
+  this.noCompatMode  = options['noCompatMode
